@@ -1,0 +1,155 @@
+﻿<?xml version="1.0"?>
+<cards>
+    <streets>
+        <!--BROWN-->
+        <street>
+            <position>1</position>
+            <color>BROWN</color>
+            <name>San Polo Cimabue</name>
+        </street>
+        <street>
+            <position>3</position>
+            <color>BROWN</color>
+            <name>San Polo Parco</name>
+        </street>
+        <!--AZURE-->
+        <street>
+            <position>6</position>
+            <color>AZURE</color>
+            <name>Volta</name>
+        </street>
+        <street>
+            <position>8</position>
+            <color>AZURE</color>
+            <name>Via Milano</name>
+        </street>
+        <street>
+            <position>9</position>
+            <color>AZURE</color>
+            <name>Villaggio Violino</name>
+        </street>
+        <!--PURPLE-->
+        <street>
+            <position>11</position>
+            <color>PURPLE</color>
+            <name>Chiesanuova</name>
+        </street>
+        <street>
+            <position>13</position>
+            <color>PURPLE</color>
+            <name>Villaggio Sereno</name>
+        </street>
+        <street>
+            <position>14</position>
+            <color>PURPLE</color>
+            <name>Quartiere Abba</name>
+        </street>
+        <!--ORANGE-->
+        <street>
+            <position>16</position>
+            <color>ORANGE</color>
+            <name>Brescia Due</name>
+        </street>
+        <street>
+            <position>18</position>
+            <color>ORANGE</color>
+            <name>Sant'Eufemia</name>
+        </street>
+        <street>
+            <position>19</position>
+            <color>ORANGE</color>
+            <name>Piazzale Arnaldo</name>
+        </street>
+        <!--RED-->
+        <street>
+            <position>21</position>
+            <color>RED</color>
+            <name>Piazza della Loggia</name>
+        </street>
+        <street>
+            <position>23</position>
+            <color>RED</color>
+            <name>Piazza Vittoria</name>
+        </street>
+        <street>
+            <position>24</position>
+            <color>RED</color>
+            <name>Piazza Paolo VI</name>
+        </street>
+        <!--YELLOW-->
+        <street>
+            <position>26</position>
+            <color>YELLOW</color>
+            <name>Via San Faustino</name>
+        </street>
+        <street>
+            <position>27</position>
+            <color>YELLOW</color>
+            <name>Mompiano</name>
+        </street>
+        <street>
+            <position>29</position>
+            <color>YELLOW</color>
+            <name>San Bartolomeo</name>
+        </street>
+        <!--GREEN-->
+        <street>
+            <position>31</position>
+            <color>GREEN</color>
+            <name>Lago d'Iseo</name>
+        </street>
+        <street>
+            <position>32</position>
+            <color>GREEN</color>
+            <name>Lago di Garda</name>
+        </street>
+        <street>
+            <position>34</position>
+            <color>GREEN</color>
+            <name>Citta' indipendente di Lonato</name>
+        </street>
+                <!--BLUE-->
+        <street>
+            <position>37</position>
+            <color>BLUE</color>
+            <name>Traphouse</name>
+        </street>
+        <street>
+            <position>39</position>
+            <color>BLUE</color>
+            <name>Castenedolo</name>
+        </street>
+    </streets>
+</cards>
+
+
+<!-- 
+
+Questo file XML contiene tutti i dati relativi ai contratti:
+    1. Strade
+    2. Stazioni
+    3. Compagnie
+    4. Probabilita' e imprevisti
+    5. Prigione e vai in prigione
+    6. Tasse
+
+Ogni carta tiene una caratteristica POSIZIONE: numero intero che indica la casella
+
+Le strade sono presenti in una mappa, chiave di accesso la relativa posizione. Il controllo
+della presenza della serie di strade per poter iniziare a costruire case viene fatto a livello
+di giocatore: switch che da false va a true (boolean hasAll_COLOR_Cards), con questo si 
+potrebbe anche attivare la relativa sezione sul bottone (bottone COSTRUISCICASE all'inizio
+disattivato, si attiva una volta che si ha una serie di case per la relativa sezione). 
+
+Le stazioni sono pia' semplici da gestire, in base a quante stazioni hai fai pagare di piu'.
+
+Compagnie stesso delle stazioni, per le stazioni si potrebbe usare valore intero per 
+controllare quante stazioni possiede il giocatore mentre per le compagnie si potrebbe usare
+un boolean, se hai entrambe le compagnie varia il moltiplicatore 
+
+Probabilita', imprevisti, prigione, vai in prigione e tasse sono relativamente semplici,
+sulle prime due c'e' effetto tipo "incasso", "esborso", "carta chiave uscita prigione", "vai
+in prigione"
+
+
+-->
