@@ -121,29 +121,10 @@
             <name>Castenedolo</name>
         </street>
     </streets>
-        
+    
     <stations>
-    	<!--STATIONS-->
+    	
     </stations>
-
-    <companies>
-        <!--COMPANIES-->
-    </companies>
-
-    <chanceandprobabilities>
-        <!--CHANCE AND PROBABILITIES-->
-    </chanceandprobabilities>
-
-    <prison>
-        <!--GO TO PRISON AND PRISON-->
-    </prison>
-
-    <taxes>
-        <!--TAXES-->    
-    </taxes>
-
-
-
 </cards>
 
 
