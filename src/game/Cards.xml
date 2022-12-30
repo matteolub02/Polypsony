@@ -1,6 +1,12 @@
 ﻿<?xml version="1.0"?>
 <cards>
 
+    <start>
+        <!--START-->
+        <position>0</position>
+        <name>Partenza</name>
+    </start>
+
     <streets>
         <!--BROWN-->
         <street>
@@ -124,24 +130,93 @@
         
     <stations>
     	<!--STATIONS-->
+        <station> 
+            <position>5</position>
+            <name>Stazione di Sant'Eufemia</name>
+        </station>
+        <station> 
+            <position>15</position>
+            <name>Stazione di Brescia</name>
+        </station>
+        <station> 
+            <position>25</position>
+            <name>Stazione di Rovato</name>
+        </station>
+        <station> 
+            <position>35</position>
+            <name>Stazione di Lonato</name>
+        </station>
     </stations>
 
     <companies>
         <!--COMPANIES-->
+        <company>
+            <position>12</position>
+            <name>Compagnia di Trasporto</name>
+        </company>
+        <company>
+            <position>28</position>
+            <name>Compagnia di Trasporto</name>
+        </company>
     </companies>
 
     <chanceandprobabilities>
         <!--CHANCE AND PROBABILITIES-->
+        <chance>
+            <position>7</position>
+            <name>Imprevisto</name>
+        </chance>
+        <chance>
+            <position>22</position>
+            <name>Imprevisto</name>
+        </chance>
+        <chance>
+            <position>36</position>
+            <name>Imprevisto</name>
+        </chance>
+        <imprevisto>
+            <position>2</position>
+            <name>Probabilita'</name>
+        </imprevisto>
+        <imprevisto>
+            <position>17</position>
+            <name>Probabilita'</name>
+        </imprevisto>
+        <imprevisto>
+            <position>33</position>
+            <name>Probabilita'</name>
+        </imprevisto>
     </chanceandprobabilities>
 
     <prison>
         <!--GO TO PRISON AND PRISON-->
+        <gotoprison>
+            <position>30</position>
+            <name>Vai in prigione</name>
+        </gotoprison>
+        <prison>
+            <position>10</position>
+            <name>Prigione</name>  <!--CONTROLLARE-->
+        </prison>
     </prison>
 
     <taxes>
-        <!--TAXES-->    
+        <!--TAXES-->
+        <tax>
+            <position>4</position>
+            <name>Tassa sul reddito</name>
+        </tax>
+        <tax>
+            <position>38</position>
+            <name>Tassa sul reddito</name>
+        </tax>
     </taxes>
 
+    <parcheggio>
+        <!--Parcheggio gratuito-->
+        <position>20</position>
+        <name>Parcheggio gratuito</name>
+    </parcheggio>
 
 
 </cards>
