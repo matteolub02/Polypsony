@@ -1,0 +1,141 @@
+﻿<?xml version="1.0"?>
+<main>
+<communitychest>
+    <card>
+        <name>Avanza fino al via! (ritirate 200M)</name>
+        <action>advanceTo</action>
+        <position>40</position>
+    </card>
+    <card>
+        <name>Hai dedicato il tempo per stare con i vicini più anziani, incassate 100M</name>
+        <action>collect</action>
+        <amount>100</amount>
+    </card>
+    <card>
+        <name>Con la vostra donazione, avete reso felici i vostri amici pelosi del rifugio per animali. Versate 50M</name>
+        <action>pay</action>
+        <amount>50</amount>
+    </card>
+    <card>
+        <name>Organizzate un gruppo per pulire il percorso pedonale della vostra città. Inccasate 50M</name>
+        <action>collect</action>
+        <amount>50</amount>
+    </card>
+    <card>
+        <name>PASS PRIGIONE GRATUITO</name>
+        <action>getOutOfJailFree</action>
+    </card>
+    <card>
+        <name>Andate diretto in prigione senza passare dal via!</name>
+        <action>goToJail</action>
+    </card>
+    <card>
+        <name>Avete aiutato la vostra vicina a portare la spesa in casa. Per ringraziarvi, ha deciso di prepararvi il pranzo. Incassate 20M</name>
+        <action>collect</action>
+        <amount>20</amount>
+    </card>
+    <card>
+        <name>È il vostro compleanno! Ogni giocatore vi deve 10M</name>
+        <action>collectFromAll</action>
+        <amount>10</amount>
+    </card>
+    <card>
+        <name>Avete aiutato a costruire un nuovo parco giochi per la scuola, incassate 100M</name>
+        <action>collect</action>
+        <amount>100</amount>
+    </card>
+    <card>
+        <name>Acquistate dolci alla vendita di dolci della scuola, pagate 50M</name>
+        <action>pay</action>
+        <amount>50</amount>
+    </card>
+    <card>
+        <name>Tasse scolastiche, pagate 10M</name>
+        <action>pay</action>
+        <amount>10</amount>
+    </card>
+    <card>
+        <name>Avete aiutato i vostri vicini a ripulire i giardini dopo un forte temporale, incassate 200M</name>
+        <action>collect</action>
+        <amount>200</amount>
+    </card>
+    <card>
+        <name>Riparazioni previste! Pagate 40M per ogni casa che possedete, 115M per alberghi</name>
+        <action>payByHouses</action>
+        <amountHouse>40</amountHouse>
+        <amountHotel>115</amountHotel>
+    </card>
+    <card>
+        <name>Avete vinto il secondo premio per il concorso di bellezza! Incassate 10M</name>
+        <action>collect</action>
+        <amount>10</amount>
+    </card>
+</communitychest>
+
+<chances>
+	    <card>
+        <name> Avanzate fino alla prossima stazione! Se libera, potete acquistarla, altrimenti pagate il proprietario il doppio del noleggio. Se passate dal via ritirate 200M</name>
+        <action>advanceToNextStation</action> 
+    </card>
+    <card>
+        <name>Eseguite lavori di manutenzione su tutti i vostri edifici, 25M per ogni casa, 100M per ogni albergo</name>
+        <action>payByHouses</action>
+        <amountHouse>25</amountHouse>
+        <amountHotel>100</amountHotel>
+    </card>
+    <card>
+        <name>Tornate indietro di 3 caselle</name>
+        <action>goBack</action>
+        <amount>3</amount>
+    </card>
+    <card>
+        <name>Andate avanti fino a Castenedolo!</name>
+        <action>advanceTo</action>
+        <position>39</position>
+    </card>
+    <card>
+        <name>La banca vi paga un dividendo di 50M</name>
+        <action>collect</action>
+        <amount>50</amount>
+    </card>
+    <card>
+        <name>Maturano i vostri interessi, incassate 150M</name>
+        <action>collect</action>
+        <amount>150</amount>
+    </card>
+    <card>
+        <name>Andate avanti fino al via! Ritirate 200M!</name>
+        <action>advanceTo</action>
+        <position>40</position>
+    </card>
+    <card>
+        <name>Andate diretto in prigione! Non passate dal via</name>
+        <action>goToJail</action>
+    </card>
+    <card>
+        <name>Avanzate fino a Piazza Paolo VI, se passate dal via ritirate 200</name>
+        <action>advanceTo</action>
+        <position>24</position>
+    </card>
+    <card>
+        <name>Siete stati eletti alla presidenza del consiglio di amministrazione, pagate a ciascun giocatore 50M</name>
+        <action>payToAll</action>
+        <amount>50</amount>
+    </card>
+    <card>
+        <name>Avanzate fino a Quartiere Abba, se passate dal via ritirate 200M</name>
+        <action>advanceTo</action>
+        <position>14</position>
+    </card>
+    <card>
+        <name>Multa per eccesso di velocità, pagate 15M</name>
+        <action>pay</action>
+        <amount>15</amount>
+    </card>
+    <card>
+        <name>Fate un viaggio fino alla stazione di Sant'Eufemia. Se passate dal via, ritirate 200M</name>
+        <action>advanceTo</action>
+        <position>5</position>
+    </card>
+</chances>
+</main>

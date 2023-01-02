@@ -2,22 +2,16 @@ package game;
 
 public abstract class Card {
 	
-	/*
-	 * The cards are divided in purchasable and not for sale.
-	 * If a card is not purchasable, it gives the player an effect:
-	 * -Draw a card
-	 * -Make him pay for:
-	 * 	.TAXES
-	 * 	.
-	 */
-	
+	public static final int STREET = 0, TAX = 1, CHANCE = 2, COMMUNITY_CHEST = 3, NO_EFF = 4, STATION = 5, COMPANY = 6;
+
 	private String name;
-	private int pos;
+	private int pos, type;
 	
 	
-	public Card(String name, int pos) {
+	public Card(String name, int pos, int type) {
 		this.name = name;
 		this.pos = pos;
+		this.type = type;
 	}
 	
 	public String getName() {
@@ -26,6 +20,11 @@ public abstract class Card {
 
 	public int getPos() {
 		return pos;
-	}	
+	}
+
+	public int getType() {
+		return type;
+	}
+	
 
 }

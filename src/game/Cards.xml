@@ -141,10 +141,10 @@
         </station>
 
         <!--COMPANIES-->
-        <company pos = "12">
+        <company pos = "28">
             <name>Compagnia dell'acqua</name>
         </company>
-        <company pos = "28">
+        <company pos = "12">
             <name>Compagnia dell'elettricita'</name>
         </company>
 
