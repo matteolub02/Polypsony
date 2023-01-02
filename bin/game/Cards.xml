@@ -1,220 +1,192 @@
 ﻿<?xml version="1.0"?>
 <cards>
 
-    <start>
+    <start pos = "0">
         <!--START-->
-        <position>0</position>
         <name>Partenza</name>
     </start>
 
-    <streets>
-        <!--BROWN-->
-        <street>
-            <position>1</position>
+        
+	<!--BROWN-->
+        <street pos = "1">
             <color>BROWN</color>
             <name>San Polo Cimabue</name>
+            <cost>>60</cost>
         </street>
-        <street>
-            <position>3</position>
+        <street pos = "3">
             <color>BROWN</color>
             <name>San Polo Parco</name>
+            <cost>>60</cost>
         </street>
         <!--AZURE-->
-        <street>
-            <position>6</position>
+        <street pos = "6">
             <color>AZURE</color>
             <name>Volta</name>
+            <cost>>100</cost>
         </street>
-        <street>
-            <position>8</position>
+        <street pos = "8">
             <color>AZURE</color>
             <name>Via Milano</name>
+            <cost>>100</cost>
         </street>
-        <street>
-            <position>9</position>
+        <street pos = "9">
             <color>AZURE</color>
             <name>Villaggio Violino</name>
+            <cost>>120</cost>
         </street>
         <!--PURPLE-->
-        <street>
-            <position>11</position>
+        <street pos = "11">
             <color>PURPLE</color>
             <name>Chiesanuova</name>
+            <cost>>140</cost>
         </street>
-        <street>
-            <position>13</position>
+        <street pos = "13">
             <color>PURPLE</color>
             <name>Villaggio Sereno</name>
+            <cost>>140</cost>
         </street>
-        <street>
-            <position>14</position>
+        <street pos = "14">
             <color>PURPLE</color>
             <name>Quartiere Abba</name>
+            <cost>>160</cost>
         </street>
         <!--ORANGE-->
-        <street>
-            <position>16</position>
+        <street pos = "16">
             <color>ORANGE</color>
             <name>Brescia Due</name>
+            <cost>>180</cost>
         </street>
-        <street>
-            <position>18</position>
+        <street pos = "18">
             <color>ORANGE</color>
             <name>Sant'Eufemia</name>
+            <cost>>180</cost>
         </street>
-        <street>
-            <position>19</position>
+        <street pos = "19">
             <color>ORANGE</color>
             <name>Piazzale Arnaldo</name>
+            <cost>>200</cost>
         </street>
         <!--RED-->
-        <street>
-            <position>21</position>
+        <street pos = "21">
             <color>RED</color>
             <name>Piazza della Loggia</name>
+            <cost>220</cost>
         </street>
-        <street>
-            <position>23</position>
+        <street pos = "23">
             <color>RED</color>
             <name>Piazza Vittoria</name>
+            <cost>220</cost>
         </street>
-        <street>
-            <position>24</position>
+        <street pos = "24">
             <color>RED</color>
             <name>Piazza Paolo VI</name>
+            <cost>240</cost>
         </street>
         <!--YELLOW-->
-        <street>
-            <position>26</position>
+        <street pos = "26">
             <color>YELLOW</color>
             <name>Via San Faustino</name>
+            <cost>260</cost>
         </street>
-        <street>
-            <position>27</position>
+        <street pos = "27">
             <color>YELLOW</color>
             <name>Mompiano</name>
+            <cost>260</cost>
         </street>
-        <street>
-            <position>29</position>
+        <street pos = "29">
             <color>YELLOW</color>
             <name>San Bartolomeo</name>
+            <cost>280</cost>
         </street>
         <!--GREEN-->
-        <street>
-            <position>31</position>
+        <street pos = "31">
             <color>GREEN</color>
             <name>Lago d'Iseo</name>
+            <cost>300</cost>
         </street>
-        <street>
-            <position>32</position>
+        <street pos = "32">
             <color>GREEN</color>
             <name>Lago di Garda</name>
+            <cost>300</cost>
         </street>
-        <street>
-            <position>34</position>
+        <street pos = "34">
             <color>GREEN</color>
             <name>Citta' indipendente di Lonato</name>
+            <cost>320</cost>
         </street>
                 <!--BLUE-->
-        <street>
-            <position>37</position>
+        <street pos = "37">
             <color>BLUE</color>
             <name>Traphouse</name>
+            <cost>350</cost>
         </street>
-        <street>
-            <position>39</position>
+        <street pos = "39">
             <color>BLUE</color>
             <name>Castenedolo</name>
+            <cost>400</cost>
         </street>
-    </streets>
         
-    <stations>
     	<!--STATIONS-->
-        <station> 
-            <position>5</position>
+        <station pos = "5"> 
             <name>Stazione di Sant'Eufemia</name>
         </station>
-        <station> 
-            <position>15</position>
+        <station pos = "15"> 
             <name>Stazione di Brescia</name>
         </station>
-        <station> 
-            <position>25</position>
+        <station pos = "25"> 
             <name>Stazione di Rovato</name>
         </station>
-        <station> 
-            <position>35</position>
+        <station pos = "35"> 
             <name>Stazione di Lonato</name>
         </station>
-    </stations>
 
-    <companies>
         <!--COMPANIES-->
-        <company>
-            <position>12</position>
-            <name>Compagnia di Trasporto</name>
+        <company pos = "12">
+            <name>Compagnia dell'acqua</name>
         </company>
-        <company>
-            <position>28</position>
-            <name>Compagnia di Trasporto</name>
+        <company pos = "28">
+            <name>Compagnia dell'elettricita'</name>
         </company>
-    </companies>
 
-    <chanceandprobabilities>
         <!--CHANCE AND PROBABILITIES-->
-        <chance>
-            <position>7</position>
+        <chances pos = "7">
             <name>Imprevisto</name>
-        </chance>
-        <chance>
-            <position>22</position>
+        </chances>
+        <chances pos = "22">
             <name>Imprevisto</name>
-        </chance>
-        <chance>
-            <position>36</position>
+        </chances>
+        <chances pos = "36">
             <name>Imprevisto</name>
-        </chance>
-        <imprevisto>
-            <position>2</position>
+        </chances>
+        <communitychest pos = "2">
             <name>Probabilita'</name>
-        </imprevisto>
-        <imprevisto>
-            <position>17</position>
+        </communitychest>
+        <communitychest pos = "17">
             <name>Probabilita'</name>
-        </imprevisto>
-        <imprevisto>
-            <position>33</position>
+        </communitychest>
+        <communitychest pos = "33">
             <name>Probabilita'</name>
-        </imprevisto>
-    </chanceandprobabilities>
-
-    <prison>
+        </communitychest>
+        
         <!--GO TO PRISON AND PRISON-->
-        <gotoprison>
-            <position>30</position>
+        <gotoprison pos = "30">
             <name>Vai in prigione</name>
         </gotoprison>
-        <prison>
-            <position>10</position>
-            <name>Prigione</name>  <!--CONTROLLARE-->
+        <prison pos = "10">
+            <name>Prigione</name> 
         </prison>
-    </prison>
 
-    <taxes>
         <!--TAXES-->
-        <tax>
-            <position>4</position>
+     	<tax pos = "4">
             <name>Tassa sul reddito</name>
+            <cost>>200</cost>
         </tax>
-        <tax>
-            <position>38</position>
+        <tax pos = "38">
             <name>Tassa sul reddito</name>
+            <cost>>100</cost>
         </tax>
-    </taxes>
-
-    <parcheggio>
-        <!--Parcheggio gratuito-->
-        <position>20</position>
+	        <!--Parcheggio gratuito-->
+    <parcheggio pos = "20">
         <name>Parcheggio gratuito</name>
     </parcheggio>
 
@@ -250,5 +222,7 @@ Probabilita', imprevisti, prigione, vai in prigione e tasse sono relativamente s
 sulle prime due c'e' effetto tipo "incasso", "esborso", "carta chiave uscita prigione", "vai
 in prigione"
 
-
+Oltre tutti questi dati, c'è un valore fondamentale: quanto pagare una volta sulla casella,
+differenziando i costi in base al tipo (acquisto proprietà, acquisto casa, tasse, pagamento
+affitto, ipoteca). 
 -->
