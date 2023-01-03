@@ -26,11 +26,20 @@ public class Inizializzatore {
 			if (xmlr.next() == XMLStreamConstants.START_ELEMENT)switch (xmlr.getLocalName()) {
 			case "start":
 				pos = Integer.parseInt(xmlr.getAttributeValue(0));
+				cards.put(pos, new Card("Partenza", pos, Card.NO_EFF));
 				break;
 				case "street":
 					pos = Integer.parseInt(xmlr.getAttributeValue(0));
 					cards.put(pos, streetFromXml(xmlr, pos));
-					break;	
+					break;
+				case "prison":
+					pos = Integer.parseInt(xmlr.getAttributeValue(0));
+					cards.put(pos, new Card("Prigione", pos, Card.NO_EFF));
+					break;
+				case "gotoprison":
+					pos = Integer.parseInt(xmlr.getAttributeValue(0));
+					cards.put(pos, new Card("Vai in prigione!", pos, Card.NO_EFF));
+					break;
 				case "station":
 					pos = Integer.parseInt(xmlr.getAttributeValue(0));
 					cards.put(pos, companyOrStationFromXml(xmlr, pos, Card.STATION));
@@ -39,21 +48,25 @@ public class Inizializzatore {
 					pos = Integer.parseInt(xmlr.getAttributeValue(0));
 					cards.put(pos, companyOrStationFromXml(xmlr, pos, Card.COMPANY));	
 					break;
-				/*
-				case "imprevisto": 
+				case "chances": 
+					pos = Integer.parseInt(xmlr.getAttributeValue(0));
+					cards.put(pos, new ChancesAndCommunityChest("Imprevisti", pos, Card.CHANCE));
 					break;
-				case "probabilita":
-					
+				case "communitychest":
+					pos = Integer.parseInt(xmlr.getAttributeValue(0));
+					cards.put(pos, new ChancesAndCommunityChest("Probabilita'", pos, Card.COMMUNITY_CHEST));
 					break;
 				case "tax":
-					
+					pos = Integer.parseInt(xmlr.getAttributeValue(0));
+					cards.put(pos, taxXml(xmlr, pos));
 					break;
-				*/
+				case "parcheggio":
+					pos = Integer.parseInt(xmlr.getAttributeValue(0));
+					cards.put(pos, new Card("Parcheggio libero", pos, Card.NO_EFF));
+					break;
 			}
 		}
-		for (int i = 0; i < 40; i++) {
-			System.out.println(cards.get(i));
-		}
+ 
 		return cards;
 	}
 	
@@ -111,6 +124,30 @@ public class Inizializzatore {
 		return new CompanyAndStation(name, pos, type);
 	}
 	
+	private static Tax taxXml (XMLStreamReader xmlr, int pos) throws XMLStreamException {
+		String name = "";
+		int cost = 0;
+		
+		while (xmlr.getEventType() != XMLStreamConstants.END_ELEMENT ||
+				!xmlr.getLocalName().equals("tax")) {
+			if (xmlr.next() == XMLStreamConstants.START_ELEMENT) {
+				switch (xmlr.getLocalName()) {
+				case "name":
+					xmlr.next();
+					name = xmlr.getText();
+					xmlr.next();
+					break;
+				case "cost":
+					xmlr.next();
+					cost = Integer.parseInt(xmlr.getText());
+					xmlr.next();
+					break;
+				}
+			}
+		}
+		
+		return new Tax(name, pos, Card.TAX, cost);
+	}
 	
 
 }

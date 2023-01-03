@@ -223,11 +223,11 @@
         <!--TAXES-->
      	<tax pos = "4">
             <name>Tassa sul reddito</name>
-            <cost>>200</cost>
+            <cost>200</cost>
         </tax>
         <tax pos = "38">
             <name>Tassa sul reddito</name>
-            <cost>>100</cost>
+            <cost>100</cost>
         </tax>
 	        <!--Parcheggio gratuito-->
     <parcheggio pos = "20">

@@ -1,6 +1,6 @@
 package game;
 
-public abstract class Card {
+public class Card {
 	
 	public static final int STREET = 0, TAX = 1, CHANCE = 2, COMMUNITY_CHEST = 3, NO_EFF = 4, STATION = 5, COMPANY = 6;
 
@@ -16,7 +16,7 @@ public abstract class Card {
 	
 	@Override
 	public String toString () {
-		return new String(name + " - POS: " + pos + " - Type: " + getType());
+		return new String(name + " - Type: " + getType());
 	}
 	
 	public String getName() {
