@@ -11,14 +11,14 @@
         <street pos = "1">
             <color>BROWN</color>
             <name>San Polo Cimabue</name>
-            <cost>>60</cost>
+            <cost>60</cost>
             <rent>2</rent>
             <house>50</house>
         </street>
         <street pos = "3">
             <color>BROWN</color>
             <name>San Polo Parco</name>
-            <cost>>60</cost>
+            <cost>60</cost>
             <rent>4</rent>
             <house>50</house>
         </street>
@@ -26,21 +26,21 @@
         <street pos = "6">
             <color>AZURE</color>
             <name>Volta</name>
-            <cost>>100</cost>
+            <cost>100</cost>
             <rent>6</rent>
             <house>50</house>
         </street>
         <street pos = "8">
             <color>AZURE</color>
             <name>Via Milano</name>
-            <cost>>100</cost>
+            <cost>100</cost>
             <rent>6</rent>
             <house>50</house>
         </street>
         <street pos = "9">
             <color>AZURE</color>
             <name>Villaggio Violino</name>
-            <cost>>120</cost>
+            <cost>120</cost>
             <rent>8</rent>
             <house>50</house>
         </street>
@@ -48,21 +48,21 @@
         <street pos = "11">
             <color>PURPLE</color>
             <name>Chiesanuova</name>
-            <cost>>140</cost>
+            <cost>140</cost>
             <rent>10</rent>
             <house>100</house>
         </street>
         <street pos = "13">
             <color>PURPLE</color>
             <name>Villaggio Sereno</name>
-            <cost>>140</cost>
+            <cost>140</cost>
             <rent>10</rent>
             <house>100</house>
         </street>
         <street pos = "14">
             <color>PURPLE</color>
             <name>Quartiere Abba</name>
-            <cost>>160</cost>
+            <cost>160</cost>
             <rent>12</rent>
             <house>100</house>
         </street>
@@ -70,21 +70,21 @@
         <street pos = "16">
             <color>ORANGE</color>
             <name>Brescia Due</name>
-            <cost>>180</cost>
+            <cost>180</cost>
             <rent>14</rent>
             <house>100</house>
         </street>
         <street pos = "18">
             <color>ORANGE</color>
             <name>Sant'Eufemia</name>
-            <cost>>180</cost>
+            <cost>180</cost>
             <rent>14</rent>
             <house>100</house>
         </street>
         <street pos = "19">
             <color>ORANGE</color>
             <name>Piazzale Arnaldo</name>
-            <cost>>200</cost>
+            <cost>200</cost>
             <rent>16</rent>
             <house>100</house>
         </street>

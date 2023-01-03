@@ -14,6 +14,11 @@ public abstract class Card {
 		this.type = type;
 	}
 	
+	@Override
+	public String toString () {
+		return new String(name + " - POS: " + pos + " - Type: " + getType());
+	}
+	
 	public String getName() {
 		return name;
 	}
@@ -22,8 +27,24 @@ public abstract class Card {
 		return pos;
 	}
 
-	public int getType() {
-		return type;
+	public String getType() {
+		switch (type) {
+		case STREET:
+			return "Street";
+		case TAX:
+			return "Tax";
+		case CHANCE:
+			return "Chance";
+		case COMMUNITY_CHEST:
+			return "Community Chest";
+		case NO_EFF:
+			return "No Eff";
+		case STATION:
+			return "Station";
+		case COMPANY:
+			return "Company";
+		}
+		return "err";
 	}
 	
 
