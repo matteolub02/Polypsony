@@ -44,7 +44,7 @@ public class Inizializzatore {
 					
 					break;
 				case "company":
-					
+							
 					break;
 				case "imprevisto": 
 					break;

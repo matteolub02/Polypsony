@@ -12,118 +12,162 @@
             <color>BROWN</color>
             <name>San Polo Cimabue</name>
             <cost>>60</cost>
+            <rent>2</rent>
+            <house>50</house>
         </street>
         <street pos = "3">
             <color>BROWN</color>
             <name>San Polo Parco</name>
             <cost>>60</cost>
+            <rent>4</rent>
+            <house>50</house>
         </street>
         <!--AZURE-->
         <street pos = "6">
             <color>AZURE</color>
             <name>Volta</name>
             <cost>>100</cost>
+            <rent>6</rent>
+            <house>50</house>
         </street>
         <street pos = "8">
             <color>AZURE</color>
             <name>Via Milano</name>
             <cost>>100</cost>
+            <rent>6</rent>
+            <house>50</house>
         </street>
         <street pos = "9">
             <color>AZURE</color>
             <name>Villaggio Violino</name>
             <cost>>120</cost>
+            <rent>8</rent>
+            <house>50</house>
         </street>
         <!--PURPLE-->
         <street pos = "11">
             <color>PURPLE</color>
             <name>Chiesanuova</name>
             <cost>>140</cost>
+            <rent>10</rent>
+            <house>100</house>
         </street>
         <street pos = "13">
             <color>PURPLE</color>
             <name>Villaggio Sereno</name>
             <cost>>140</cost>
+            <rent>10</rent>
+            <house>100</house>
         </street>
         <street pos = "14">
             <color>PURPLE</color>
             <name>Quartiere Abba</name>
             <cost>>160</cost>
+            <rent>12</rent>
+            <house>100</house>
         </street>
         <!--ORANGE-->
         <street pos = "16">
             <color>ORANGE</color>
             <name>Brescia Due</name>
             <cost>>180</cost>
+            <rent>14</rent>
+            <house>100</house>
         </street>
         <street pos = "18">
             <color>ORANGE</color>
             <name>Sant'Eufemia</name>
             <cost>>180</cost>
+            <rent>14</rent>
+            <house>100</house>
         </street>
         <street pos = "19">
             <color>ORANGE</color>
             <name>Piazzale Arnaldo</name>
             <cost>>200</cost>
+            <rent>16</rent>
+            <house>100</house>
         </street>
         <!--RED-->
         <street pos = "21">
             <color>RED</color>
             <name>Piazza della Loggia</name>
             <cost>220</cost>
+            <rent>18</rent>
+            <house>150</house>
         </street>
         <street pos = "23">
             <color>RED</color>
             <name>Piazza Vittoria</name>
             <cost>220</cost>
+            <rent>18</rent>
+            <house>150</house>
         </street>
         <street pos = "24">
             <color>RED</color>
             <name>Piazza Paolo VI</name>
             <cost>240</cost>
+            <rent>20</rent>
+            <house>150</house>
         </street>
         <!--YELLOW-->
         <street pos = "26">
             <color>YELLOW</color>
             <name>Via San Faustino</name>
             <cost>260</cost>
+            <rent>22</rent>
+            <house>150</house>
         </street>
         <street pos = "27">
             <color>YELLOW</color>
             <name>Mompiano</name>
             <cost>260</cost>
+            <rent>22</rent>
+            <house>150</house>
         </street>
         <street pos = "29">
             <color>YELLOW</color>
             <name>San Bartolomeo</name>
             <cost>280</cost>
+            <rent>24</rent>
+            <house>150</house>
         </street>
         <!--GREEN-->
         <street pos = "31">
             <color>GREEN</color>
             <name>Lago d'Iseo</name>
             <cost>300</cost>
+            <rent>26</rent>
+            <house>200</house>
         </street>
         <street pos = "32">
             <color>GREEN</color>
             <name>Lago di Garda</name>
             <cost>300</cost>
+            <rent>26</rent>
+            <house>200</house>
         </street>
         <street pos = "34">
             <color>GREEN</color>
             <name>Citta' indipendente di Lonato</name>
             <cost>320</cost>
+            <rent>28</rent>
+            <house>200</house>
         </street>
                 <!--BLUE-->
         <street pos = "37">
             <color>BLUE</color>
             <name>Traphouse</name>
             <cost>350</cost>
+            <rent>35</rent>
+            <house>200</house>
         </street>
         <street pos = "39">
             <color>BLUE</color>
             <name>Castenedolo</name>
             <cost>400</cost>
+            <rent>50</rent>
+            <house>200</house>
         </street>
         
     	<!--STATIONS-->
@@ -224,5 +268,19 @@ in prigione"
 
 Oltre tutti questi dati, c'è un valore fondamentale: quanto pagare una volta sulla casella,
 differenziando i costi in base al tipo (acquisto proprietà, acquisto casa, tasse, pagamento
-affitto, ipoteca). 
+affitto, ipoteca).
+
+Delle strade, il costo dell'affitto varia secondo questo schema:
+SINGOLO AFFITTO = y
+ROW = 2 * y
+PRIMA CASA = 2 * (ROW) + y
+SECONDA CASA = 3 * (PRIMA CASA)
+TERZA CASA = 2 * (SECONDA CASA) + PRIMA CASA 
+QUARTA CASA = TERZA CASA + PRIMA CASA
+ALBERGO = TERZA CASA + SECONDA CASA
+
+Delle stazioni l'affitto parte da 25 e aumenta di 25 ogni volta che si possiede una stazione.
+
+Delle società l'affitto parte da 4 volte il valore del dado e aumenta di 10 volte il valore 
+del dado quando si possiedono entrambe le società.
 -->
