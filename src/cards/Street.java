@@ -1,4 +1,4 @@
-package game;
+package cards;
 
 public class Street extends Card{
 	
@@ -8,7 +8,7 @@ public class Street extends Card{
 	
 	public Street(int pos, String color, String name, int cost, int rent, int house) {
 		super(name, pos, Card.STREET);
-		this.color = color;
+		this.color = color; 
 		this.cost = cost;
 		this.rent = rent;
 		this.house = house;

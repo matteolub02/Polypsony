@@ -1,4 +1,4 @@
-package game;
+package cards;
 
 import java.io.FileInputStream;
 import java.util.HashMap;
@@ -8,19 +8,11 @@ import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
-public class Inizializzatore {
+public class InitializeCards {
 	
-	public static HashMap<Integer, Card> inizializza () throws XMLStreamException {
+	public static HashMap<Integer, Card> initialize () throws XMLStreamException {
 		HashMap<Integer, Card> cards = new HashMap<>(); //
-		XMLInputFactory xmlif = null;
-		XMLStreamReader xmlr = null;
-		try {
-		 xmlif = XMLInputFactory.newInstance();
-		 xmlr = xmlif.createXMLStreamReader("src/game/Cards.xml", new FileInputStream("src/game/Cards.xml"));
-		} catch (Exception e) {
-		 System.out.println("Errore nell'inizializzazione del reader:");
-		 System.out.println(e.getMessage());
-		}
+		XMLStreamReader xmlr = xmlrCreator ("src/cards/Cards.xml");
 		int pos = 0;
 		while (xmlr.hasNext()) {
 			if (xmlr.next() == XMLStreamConstants.START_ELEMENT)switch (xmlr.getLocalName()) {
@@ -66,7 +58,7 @@ public class Inizializzatore {
 					break;
 			}
 		}
- 
+		ChancesAndCommunityChest.initializeChancesAndCommunityChestCards();
 		return cards;
 	}
 	
@@ -147,6 +139,19 @@ public class Inizializzatore {
 		}
 		
 		return new Tax(name, pos, Card.TAX, cost);
+	}
+	
+	public static XMLStreamReader xmlrCreator (String fileXmlPos) {
+		XMLInputFactory xmlif = null;
+		XMLStreamReader xmlr = null;
+		try {
+		 xmlif = XMLInputFactory.newInstance();
+		 xmlr = xmlif.createXMLStreamReader(fileXmlPos, new FileInputStream(fileXmlPos));
+		} catch (Exception e) {
+		 System.out.println("Errore nell'inizializzazione del reader:");
+		 System.out.println(e.getMessage());
+		}
+		return xmlr;
 	}
 	
 

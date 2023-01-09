@@ -222,11 +222,11 @@
 
         <!--TAXES-->
      	<tax pos = "4">
-            <name>Tassa sul reddito</name>
+            <name>Tasse universitarie</name>
             <cost>200</cost>
         </tax>
         <tax pos = "38">
-            <name>Tassa sul reddito</name>
+            <name>Accise</name>
             <cost>100</cost>
         </tax>
 	        <!--Parcheggio gratuito-->

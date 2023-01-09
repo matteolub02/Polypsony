@@ -1,4 +1,4 @@
-package game;
+package cards;
 
 public class CompanyAndStation extends Card{
 	

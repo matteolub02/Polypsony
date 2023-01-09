@@ -1,4 +1,4 @@
-package game;
+package cards;
 
 public class Card {
 	
@@ -6,7 +6,6 @@ public class Card {
 
 	private String name;
 	private int pos, type;
-	
 	
 	public Card(String name, int pos, int type) {
 		this.name = name;
@@ -30,19 +29,19 @@ public class Card {
 	public String getType() {
 		switch (type) {
 		case STREET:
-			return "Street";
+			return "street";
 		case TAX:
-			return "Tax";
+			return "tax";
 		case CHANCE:
-			return "Chance";
+			return "chances";
 		case COMMUNITY_CHEST:
-			return "Community Chest";
+			return "communitychest";
 		case NO_EFF:
-			return "No Eff";
+			return "noeff";
 		case STATION:
-			return "Station";
+			return "station";
 		case COMPANY:
-			return "Company";
+			return "company";
 		}
 		return "err";
 	}

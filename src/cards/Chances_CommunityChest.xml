@@ -4,7 +4,7 @@
     <card>
         <name>Avanza fino al via! (ritirate 200M)</name>
         <action>advanceTo</action>
-        <position>40</position>
+        <amount>40</amount>
     </card>
     <card>
         <name>Hai dedicato il tempo per stare con i vicini più anziani, incassate 100M</name>
@@ -60,10 +60,9 @@
         <amount>200</amount>
     </card>
     <card>
-        <name>Riparazioni previste! Pagate 40M per ogni casa che possedete, 115M per alberghi</name>
+        <name>Riparazioni previste! Pagate 40M per ogni casa che possedete, 80M per alberghi</name>
         <action>payByHouses</action>
-        <amountHouse>40</amountHouse>
-        <amountHotel>115</amountHotel>
+        <amount>40</amount>
     </card>
     <card>
         <name>Avete vinto il secondo premio per il concorso di bellezza! Incassate 10M</name>
@@ -71,17 +70,15 @@
         <amount>10</amount>
     </card>
 </communitychest>
-
 <chances>
 	    <card>
         <name> Avanzate fino alla prossima stazione! Se libera, potete acquistarla, altrimenti pagate il proprietario il doppio del noleggio. Se passate dal via ritirate 200M</name>
         <action>advanceToNextStation</action> 
     </card>
     <card>
-        <name>Eseguite lavori di manutenzione su tutti i vostri edifici, 25M per ogni casa, 100M per ogni albergo</name>
+        <name>Eseguite lavori di manutenzione su tutti i vostri edifici, 25M per ogni casa, 50M per ogni albergo</name>
         <action>payByHouses</action>
-        <amountHouse>25</amountHouse>
-        <amountHotel>100</amountHotel>
+        <amount>25</amount>
     </card>
     <card>
         <name>Tornate indietro di 3 caselle</name>
@@ -91,7 +88,7 @@
     <card>
         <name>Andate avanti fino a Castenedolo!</name>
         <action>advanceTo</action>
-        <position>39</position>
+        <amount>39</amount>
     </card>
     <card>
         <name>La banca vi paga un dividendo di 50M</name>
@@ -106,7 +103,7 @@
     <card>
         <name>Andate avanti fino al via! Ritirate 200M!</name>
         <action>advanceTo</action>
-        <position>40</position>
+        <amount>40</amount>
     </card>
     <card>
         <name>Andate diretto in prigione! Non passate dal via</name>
@@ -115,7 +112,7 @@
     <card>
         <name>Avanzate fino a Piazza Paolo VI, se passate dal via ritirate 200</name>
         <action>advanceTo</action>
-        <position>24</position>
+        <amount>24</amount>
     </card>
     <card>
         <name>Siete stati eletti alla presidenza del consiglio di amministrazione, pagate a ciascun giocatore 50M</name>
@@ -125,7 +122,7 @@
     <card>
         <name>Avanzate fino a Quartiere Abba, se passate dal via ritirate 200M</name>
         <action>advanceTo</action>
-        <position>14</position>
+        <amount>14</amount>
     </card>
     <card>
         <name>Multa per eccesso di velocità, pagate 15M</name>
@@ -135,7 +132,7 @@
     <card>
         <name>Fate un viaggio fino alla stazione di Sant'Eufemia. Se passate dal via, ritirate 200M</name>
         <action>advanceTo</action>
-        <position>5</position>
+        <amount>5</amount>
     </card>
 </chances>
 </main>

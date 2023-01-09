@@ -1,4 +1,4 @@
-package game;
+package cards;
 
 public class Tax extends Card{
 	
