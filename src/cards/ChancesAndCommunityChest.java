@@ -49,10 +49,6 @@ public class ChancesAndCommunityChest extends Card{
 		super(name, pos, type);
 	}
 	
-	/*
-	 * TODO Verificare come viene gestito l'accesso ai dati 
-	 */
-	
 	public DescriptionAndAction returnRandomCardEffect () {
 		Random rnd = new Random();
 		switch (getType()) {

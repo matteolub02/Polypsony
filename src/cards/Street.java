@@ -11,7 +11,7 @@ public class Street extends Card{
 		this.color = color; 
 		this.cost = cost;
 		this.rent = rent;
-		this.house = house;
+		this.house = house; 
 	}
 	
 	@Override

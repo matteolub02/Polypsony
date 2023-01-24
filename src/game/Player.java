@@ -9,6 +9,7 @@ public class Player {
 	public Player(String name) {
 		this.name = name;
 		balance = 1500;
+		pos = 0;
 	}
 	
 	public String getName() {
@@ -30,5 +31,5 @@ public class Player {
 	public void setBalance(int balance) {
 		this.balance = balance;
 	}
-
+	
 }
