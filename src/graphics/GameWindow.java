@@ -18,6 +18,6 @@ public class GameWindow extends JFrame {
 		this.setVisible(true);
 		this.setSize(515, 540);
 		this.add(map);
-		map.removePlayer();
+		
 	}
 }

@@ -43,7 +43,7 @@ public class Card {
 		case COMPANY:
 			return "company";
 		}
-		return "err";
+		return "err"; //tipo carta, utile per controllo azioni nel model
 	}
 	
 

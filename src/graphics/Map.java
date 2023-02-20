@@ -80,31 +80,32 @@ public class Map extends JPanel {
 	 * CASES: 40px
 	 */
 	
-	public void changePos () { 
-		/*
-		 * getPos from player, 4 cases:
-		 * low row : 
-		 * 		y MUST BE defaultY
-		 * 		if (pos == 0) x = defaultX
-		 * 		if (pos > 0 && < 9) x = defaultX - (60 + 40 * (pos - 1))
-		 * 		if (pos == 9) x = defaultX - (120 + 40 * (pos - 1))  
-		 * left row :
-		 * 		x MUST BE x = defaultX - (120 + 40 * 8)
-		 * 		if (pos == 9) y = defaultY
-		 * 		if (pos > 9 && pos < 19) y = defaultY - ( 60 + 40 * (pos - 10))
-		 * 		if (pos == 19) y = defaultY - ( 120 + 40 * (pos - 10) )
-		 * high row :
-		 * 		y MUST BE y = defaultY - (120 + 40 * 8)
-		 * 		if (pos == 19) x = defaultX - (120 + 40 * 8)
-		 * 		if (pos > 19 && pos < 29) x = defaultX - (120 + 40 * 8) + (60 + 40 * (pos - 20))
-		 * 		if (x == 29) x = defaultX
-		 * right row : 
-		 */
-		
+	public void movePiece (int player, int pos) { 
+		if (pos >= 0 && pos <= 9) {
+			positions[player].y = positions[player].defaultY;
+			if (pos == 0) positions[player].x = positions[player].defaultX;
+			if (pos > 0 && pos < 10) positions[player].x = positions[player].defaultX - (60 + 40 * (pos - 1));
+		}
+		else if (pos >= 10 && pos <= 19) {
+			positions[player].x = positions[player].defaultX - (120 + 40 * (8));
+			if (pos == 10) positions[player].y = positions[player].defaultY;
+			if (pos > 10 && pos <= 19) positions[player].y = positions[player].defaultY - ( 60 + 40 * (pos - 11));
+		}
+		else if (pos >= 20 && pos <= 29) {
+			positions[player].y = positions[player].defaultY - (120 + 40 * (8));
+			if (pos == 20) positions[player].x = positions[player].defaultX - (120 + 40 * (8));
+			if (pos > 20 && pos <= 29) positions[player].x = positions[player].defaultX - (120 + 40 * (8)) + (60 + 40 * (pos - 21));
+		}
+		else if (pos >= 30 && pos <= 39) {
+			positions[player].x = positions[player].defaultX;
+			if (pos == 30) positions[player].y = positions[player].defaultY - (120 + 40 * (8));
+			if (pos > 30 && pos <= 39) positions[player].y = positions[player].defaultY - (120 + 40 * (8)) + (60 + 40 * (pos - 31));
+		}
+		else System.out.println("ERR - NO SUCH POS");
 	}
 	
-	public void removePlayer () {
-
+	public void removePlayer (int i) {
+		
 		//TODO: rivedere
 	}
 
