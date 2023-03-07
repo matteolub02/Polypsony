@@ -17,7 +17,6 @@ public class Street extends Card{
 	@Override
 	public String toString() {
 		return new String(super.toString() + " Color: " + color + " Rent: " + rent + " House Cost: " + house);
-		
 	}
 	
 	public int getCost() {

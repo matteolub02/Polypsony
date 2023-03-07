@@ -18,7 +18,7 @@ public class ChancesAndCommunityChest extends Card{
 	public static final String ADVANCE_TO_NEXT_STATION = "advanceToNextStation";
 	public static final String GO_TO_JAIL = "goToJail";
 	public static final String GET_OUT_OF_JAIL_FREE = "getOutOfJailFree";
-	private static final String comm = "communitychest", chance = "chances";
+	private static final String COMM = "communitychest", CHANCE = "chances";
 	
 	public static class DescriptionAndAction {
 		String description;
@@ -51,10 +51,10 @@ public class ChancesAndCommunityChest extends Card{
 	
 	public DescriptionAndAction returnRandomCardEffect () {
 		Random rnd = new Random();
-		switch (getType()) {
-		case comm:
+		switch (getTypeName()) {
+		case COMM:
 			return communitychest.get(rnd.nextInt(communitychest.size()));
-		case chance:
+		case CHANCE:
 			return chances.get(rnd.nextInt(chances.size()));
 		}
 		return null;
@@ -67,11 +67,11 @@ public class ChancesAndCommunityChest extends Card{
 		try {
 			while (xmlr.hasNext()) {
 				xmlr.next();
-				if (xmlr.getEventType() == XMLStreamConstants.START_ELEMENT && xmlr.getLocalName().equals(comm)) {
-					communitychest = readCardsData(xmlr, comm);
+				if (xmlr.getEventType() == XMLStreamConstants.START_ELEMENT && xmlr.getLocalName().equals(COMM)) {
+					communitychest = readCardsData(xmlr, COMM);
 				}
-				else if (xmlr.getEventType() == XMLStreamConstants.START_ELEMENT && xmlr.getLocalName().equals(chance)) {
-					chances = readCardsData(xmlr, chance);
+				else if (xmlr.getEventType() == XMLStreamConstants.START_ELEMENT && xmlr.getLocalName().equals(CHANCE)) {
+					chances = readCardsData(xmlr, CHANCE);
 				}
 			}
 		} catch (XMLStreamException e) {

@@ -25,8 +25,12 @@ public class Card {
 	public int getPos() {
 		return pos;
 	}
-
-	public String getType() {
+	
+	public int getType() {
+		return type;
+	}
+	
+	public String getTypeName() {
 		switch (type) {
 		case STREET:
 			return "street";

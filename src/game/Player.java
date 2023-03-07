@@ -2,34 +2,40 @@ package game;
 
 public class Player {
 	
-	private String name;
-	private int balance;
-	private int pos;
-
+	private String name = null;
+	private int savings, pos;
+	
 	public Player(String name) {
 		this.name = name;
-		balance = 1500;
+		savings = 1500;
 		pos = 0;
+	}
+	
+	
+	public int getPos() {
+		return pos;
+	}
+	
+	public void changePos(int value) {
+		if ((pos+value) <= 39) pos += value;
+		else pos = ((pos+value) - 39);
 	}
 	
 	public String getName() {
 		return name;
 	}
 
-	public int getBalance() {
-		return balance;
+	public int putSavings() {
+		return savings;
 	}
 
-	public int getPos() {
-		return pos;
-	}
-
-	public void setPos(int pos) {
-		this.pos = pos;
+	public void putMoneyInSaving(int value) {
+		savings += value;
 	}
 	
-	public void setBalance(int balance) {
-		this.balance = balance;
+	public void removeMoneyFromSaving(int value) {
+		savings -= value;
 	}
 	
-}
+	
+}	
