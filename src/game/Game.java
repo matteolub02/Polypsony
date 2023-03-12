@@ -12,7 +12,7 @@ public class Game {
 	
 	private static final int STATION_RENT_INITIAL = 25, COMPANY_FIRST_MULTIPLIER = 4,
 			COMPANY_SECOND_MULTIPLIER = 10;
-	private static final int NO_ONE_HAS_THIS = -1;
+	public static final int NO_ONE_HAS_THIS = -1;
 	private HashMap<Player, Integer> playerPos = new HashMap<>();
 	private ArrayList<Player> players = null;
 	private HashMap<Integer, Card> cards = null;
@@ -20,9 +20,9 @@ public class Game {
 	private int turn = 0;
 	private int dicesValue = 0;
 	
-	public Game (ArrayList<Player> players, HashMap<Integer, Card> cards) throws XMLStreamException {
+	public Game (ArrayList<Player> players) throws XMLStreamException {
 		this.players = players;
-		this.cards = InitializeCards.initialize();
+		cards = InitializeCards.initialize();
 		initializePossessions();
 		for (int i = 0; i < players.size(); i++) {
 			playerPos.put(players.get(i), 0); //posizione dei giocatori
@@ -38,7 +38,7 @@ public class Game {
 		dicesValue = value; //fondamentale per compagnie
 		if ((playerPos.get(playerPlaying) + value) <= 39) 
 			playerPos.replace(playerPlaying, playerPos.get(playerPlaying) + value);
-		else playerPos.replace(playerPlaying, (playerPos.get(playerPlaying) + value) - 39);
+		else playerPos.replace(playerPlaying, (playerPos.get(playerPlaying) + value) - 40);
 	}
 	
 	/**
@@ -294,6 +294,11 @@ public class Game {
 	
 	/*
 	 * Forza la rimozione di un giocatore (ad esempio se esce dalla partita)
+	 * Bisogna tenere controllato questo metodo in quanto una volta rimosso il giocatore
+	 * bisogna controllare il comportamento di turn
+	 * Se rimuovo un giocatore, il turn va avanti di uno nell'arraylist quindi tocca al giocatore dopo 
+	 * e non al giocatore di diritto, questo vuol dire che bisogna aumentare il turno SOLTANTO se il giocatore
+	 * non viene eliminato!
 	 */
 	public void forceRemovePlayer (int player) {
 		playerPos.remove(players.get(player));
@@ -313,7 +318,7 @@ public class Game {
 				}
 			}
 		}
-		if (turn > player) turn -= 1;
+		//if (turn > player) turn -= 1; TODO: check
 	}
 	
 	/*
@@ -477,7 +482,7 @@ public class Game {
 	}	
 
 	public boolean hasPosChanged (int prevPos) {
-		return (playerPos.get(players.get(turn)) == prevPos);
+		return (playerPos.get(players.get(turn)) != prevPos);
 	}
 	
 	public void putPlayerInJail (int player) {
@@ -517,8 +522,19 @@ public class Game {
 		return players;
 	}
 	
+	public Player getPlayerPlaying () {
+		return players.get(turn);
+	}
+	
+	public int getPlayerPlayingPos () {
+		return playerPos.get(players.get(turn));
+	}
+	
 	public int getTurn() {
 		return turn;
 	}
 
+	public HashMap<Integer, HashMap<Card, Integer>> getPossessions() {
+		return possessions;
+	}
 }
