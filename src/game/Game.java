@@ -9,43 +9,265 @@ import cards.*;
 
 public class Game {
 	
+	private static final int STATION_RENT_INITIAL = 25, COMPANY_FIRST_MULTIPLIER = 4,
+			COMPANY_SECOND_MULTIPLIER = 10;
 	private static final int NO_ONE_HAS_THIS = -1;
-	
+	private HashMap<Player, Integer> playerPos = new HashMap<>();
 	private ArrayList<Player> players = null;
 	private HashMap<Integer, Card> cards = null;
 	private HashMap<Integer, HashMap<Card, Integer>> possessions = new HashMap<>();
 	private int turn = 0;
-	
+	private int dicesValue = 0;
 	
 	public Game (ArrayList<Player> players, HashMap<Integer, Card> cards) throws XMLStreamException {
 		this.players = players;
 		this.cards = InitializeCards.initialize();
 		initializePossessions();
+		for (int i = 0; i < players.size(); i++) {
+			playerPos.put(players.get(i), 0); //posizione dei giocatori
+		}
 	}
-
-	public ArrayList<Player> getPlayers() {
-		return players;
-	}
-
-
-	public HashMap<Integer, Card> getCards() {
-		return cards;
-	}
-
-	public int getTurn() {
-		return turn;
-	}
-
+	
 	public void changePlayerPos (int value) {
-		players.get(turn).changePos(value);
+		Player playerPlaying = players.get(turn);
+		dicesValue = value; //fondamentale per compagnie
+		if ((playerPos.get(playerPlaying) + value) <= 39) 
+			playerPos.replace(playerPlaying, playerPos.get(playerPlaying) + value);
+		else playerPos.replace(playerPlaying, (playerPos.get(playerPlaying) + value) - 39);
+	}
+	
+	public void changePlayerPosToSpecifiedPos (int value) {
+		playerPos.replace(players.get(turn), value);
+	}
+
+	public String cardEffect () {
+		
+		int position = playerPos.get(players.get(turn));
+		Player playerPlaying = players.get(turn);
+		
+		switch(cards.get(position).getType()) {
+		
+		
+		case Card.TAX:
+			Tax tax = (Tax)cards.get(position);
+			playerPlaying.removeMoneyFromSaving(tax.getCost()); //rimuove soldi
+			return new String("Oh no! Dovete pagare la " + tax.getName() + "!"
+					+ "\nPagate " + tax.getCost() + "M!");
+			
+			
+		case Card.CHANCE:
+		case Card.COMMUNITY_CHEST:
+			ChancesAndCommunityChest chances_or_comm = (ChancesAndCommunityChest) cards.get(position);
+			ChancesAndCommunityChest.DescriptionAndAction c = chances_or_comm.returnRandomCardEffect();
+			switch (c.getAction()) {
+			case ChancesAndCommunityChest.ADVANCE_TO:
+				if (position > c.getAmount()) {
+					playerPlaying.putMoneyInSaving(200); //passa dal VIA
+					playerPos.replace(playerPlaying, c.getAmount());
+					return new String(c.getDescription() + "\nRitirate 200M passando dal via!");
+
+				}
+				else {
+					playerPos.replace(playerPlaying, c.getAmount());
+					return c.getDescription();
+				}
+			case ChancesAndCommunityChest.ADVANCE_TO_NEXT_STATION:
+				if (position < 5) {
+					playerPos.replace(playerPlaying, 5);
+					return c.getDescription();
+				}
+				else if (position < 15) {
+					playerPos.replace(playerPlaying, 15);
+					return c.getDescription();
+				}
+				else if (position < 25) {
+					playerPos.replace(playerPlaying, 25);
+					return c.getDescription();
+				}
+				else if (position < 35) {
+					playerPos.replace(playerPlaying, 35);
+					return c.getDescription();
+				}
+				else {
+					playerPos.replace(playerPlaying, 5);
+					return new String (c.getDescription() + "\nRitirate 200M passando dal via!");
+				}
+			case ChancesAndCommunityChest.COLLECT:
+				playerPlaying.putMoneyInSaving(c.getAmount());
+				return c.getDescription();
+			case ChancesAndCommunityChest.COLLECT_FROM_ALL:
+				for (int i = 0; i < players.size(); i++) {
+					if (i == turn) players.get(i).putMoneyInSaving(c.getAmount() * (players.size() - 1));
+					else players.get(i).removeMoneyFromSaving(c.getAmount());
+				}
+				return c.getDescription();
+			case ChancesAndCommunityChest.GET_OUT_OF_JAIL_FREE:
+				playerPlaying.pickedGetOutOfJailFree();
+				return c.getDescription();
+			case ChancesAndCommunityChest.GO_BACK:
+				playerPos.replace(playerPlaying, position - 3);
+				return c.getDescription();
+			case ChancesAndCommunityChest.GO_TO_JAIL:
+				putPlayerInJail(turn);
+				return c.getDescription();
+			case ChancesAndCommunityChest.PAY:
+				playerPlaying.removeMoneyFromSaving(c.getAmount());
+				return c.getDescription();
+			case ChancesAndCommunityChest.PAY_BY_HOUSES:
+				playerPlaying.removeMoneyFromSaving(c.getAmount() * playerPlaying.getBuildedHouses());
+				return new String (c.getDescription() + "\nPagate " + c.getAmount() * players.get(turn).getBuildedHouses() + "M!");
+			case ChancesAndCommunityChest.PAY_TO_ALL:
+				for (int j = 0; j < players.size(); j++) {
+					if (j == turn) players.get(j).removeMoneyFromSaving(c.getAmount() * (players.size() - 1));
+					else players.get(j).putMoneyInSaving(c.getAmount());
+				}
+				return c.getDescription();			
+				
+			}
+			
+			return "Errore lettura carta di chance o possibility test";
+
+			
+		case Card.STREET: 
+			int streetPossession = possessions.get(position).get(cards.get(position));
+			Street street = (Street)cards.get(position);
+			if (streetPossession != turn && streetPossession != NO_ONE_HAS_THIS) {
+				if (street.getHousesNumber() == 0) {
+					if (checkStreetRow(position, streetPossession)) {
+						playerPaysAnotherPlayer(streetPossession, 2 * street.getRent());
+						int rent = 2 * street.getRent();
+						return new String(playerPlaying.getName() + " paga " + rent + "M al giocatore "
+								+ players.get(streetPossession).getName() + ".");
+					}
+					else {
+						playerPaysAnotherPlayer(streetPossession, street.getRent());
+						return new String(playerPlaying.getName() + " paga " + street.getRent() + "M al giocatore "
+								+ players.get(streetPossession).getName() + ".");
+					}
+				}
+				else {
+					playerPaysAnotherPlayer(streetPossession, street.getRent());
+					return new String(playerPlaying.getName() + " paga " + street.getRent() + "M al giocatore "
+							+ players.get(streetPossession).getName() + ".");
+				}
+			}
+			else if (streetPossession == NO_ONE_HAS_THIS) {
+				return "Volete acquistare?";
+			}
+			else if (streetPossession == turn) {
+				if (checkStreetRow(position, turn) && street.getHousesNumber() < 5) {
+					return "Volete costruire?";
+				}
+				else {
+					return "Siete finiti su un vostro possedimento.";	
+				}
+			}
+			
+			
+		case Card.COMPANY:
+			int companyPossession = possessions.get(position).get(cards.get(position));
+			if (companyPossession != turn && companyPossession != NO_ONE_HAS_THIS) {
+				if (countCompaniesOfAPlayer(companyPossession, position) == 2) {
+					playerPaysAnotherPlayer(companyPossession,COMPANY_SECOND_MULTIPLIER * dicesValue);
+					return new String(playerPlaying.getName() + " paga " + (COMPANY_SECOND_MULTIPLIER * dicesValue) 
+							+ "M al giocatore " + players.get(companyPossession));
+				}
+				else {
+					playerPaysAnotherPlayer(companyPossession,COMPANY_FIRST_MULTIPLIER * dicesValue);
+					return new String(playerPlaying.getName() + " paga " + (COMPANY_FIRST_MULTIPLIER * dicesValue) 
+							+ "M al giocatore " + players.get(companyPossession));
+				}
+			}
+			else if (companyPossession == NO_ONE_HAS_THIS) {
+				return new String("Volete acquistare?");
+			}
+			else return new String("");
+			
+			
+		case Card.STATION:
+			int stationPossession = possessions.get(position).get(cards.get(position));
+			if (stationPossession != turn && stationPossession != NO_ONE_HAS_THIS) {
+				playerPaysAnotherPlayer(stationPossession, STATION_RENT_INITIAL * countStationsOfAPlayer(stationPossession, position));
+				return new String(playerPlaying.getName() + " paga " + (STATION_RENT_INITIAL * countStationsOfAPlayer(stationPossession, position)
+						+ "M al giocatore " + players.get(stationPossession).getName()));
+			}
+			else if (stationPossession == NO_ONE_HAS_THIS) {
+				return new String("Volete acquistare?"); 
+			}
+			
+			
+		case Card.NO_EFF:
+			switch(position) {
+			case 0:
+				playerPlaying.putMoneyInSaving(200);
+				return new String("Ritirate 200M passando dal via!");
+			case 10:
+				return new String("Tranquilli! Siete solo di passaggio.");
+			case 20:
+				return new String("Parcheggio libero.");
+			case 30:
+				putPlayerInJail(turn);
+				return new String("Andate dritto in prigione, senza passare dal via!");
+			}
+		}
+		
+		return "Errore di lettura di carta";
+	}
+	
+	public boolean removePlayer () {
+		if (players.get(turn).getSavings() <= 0) {
+			playerPos.remove(players.get(turn));
+			players.remove(turn);
+			resetPlayerPossessions(turn);
+			changeOrderPossessions (turn);
+			return true;
+		}
+		else return false;
+	}
+	
+	public void forceRemovePlayer (int player) {
+		playerPos.remove(players.get(player));
+		players.remove(player);
+		resetPlayerPossessions(player);
+		changeOrderPossessions (player);
+	}
+	
+	public void changeOrderPossessions (int player) {
+		for (HashMap<Card, Integer> poss : possessions.values()) {
+			for (Card value : poss.keySet()) {
+				if (poss.get(value) > player) {
+					poss.replace(value, poss.get(value) - 1);
+				}
+			}
+		}
+		if (turn > player) turn -= 1;
+	}
+	
+	public void resetPlayerPossessions (int player) {
+		for (HashMap<Card, Integer> poss : possessions.values()) {
+			for (Card value : poss.keySet()) {
+				if (poss.get(value) == player) {
+					poss.replace(value, NO_ONE_HAS_THIS);
+					if (value.getType() == Card.STREET) {
+						Street street = (Street) value;
+						street.removeHouse();
+					}
+				}
+			}
+		}
+	}
+	
+	public void nextTurn() {
 		if ((turn + 1) < players.size()) turn += 1;
 		else turn = 0;
 	}
 	
+	public int getTurn() {
+		return turn;
+	}
+
 	private void initializePossessions () {
-		/*
-		 * TODO: girare per tutte le carte e riempire HashMap
-		 */
+
 		HashMap<Card, Integer> brownStreets = new HashMap<>();
 		HashMap<Card, Integer> azureStreets = new HashMap<>();
 		HashMap<Card, Integer> purpleStreets = new HashMap<>();
@@ -112,4 +334,85 @@ public class Game {
 		
 	}	
 	
+	public int countStationsOfAPlayer (int player, int pos) {
+		int count = 0;
+		HashMap<Card, Integer> stations = possessions.get(pos);
+		for (int i = 5; i < 39; i += 10) {
+			if (stations.get(cards.get(i)) == player) count++;
+		}
+		return count;
+	}
+	
+	public int countCompaniesOfAPlayer (int player, int pos) {
+		int count = 0; //Finisce sulla compagnia, se è sua non paga e non viene neanche invocato, se non è sua viene inviato numero player per conteggio
+		HashMap<Card, Integer> companies = possessions.get(pos);	
+		if (companies.get(cards.get(12)) == player) count++;
+		if (companies.get(cards.get(28)) == player) count++;
+		return count;
+	}
+	
+	public void playerPaysAnotherPlayer (int playerWhoGetsPayed, int value) {
+		players.get(turn).removeMoneyFromSaving(value);
+		players.get(playerWhoGetsPayed).putMoneyInSaving(value);			
+	}
+	
+	public void soldHouses(int position) {
+		Street street = (Street)cards.get(position);
+		int houseValue = street.getHouse() / 2;
+		players.get(turn).putMoneyInSaving(houseValue * street.getHousesNumber());
+		street.removeHouse();
+	}
+	
+	public void buildHouse (int position) {
+			Street street = (Street) cards.get(position);
+			street.buildHouse();
+			players.get(turn).buildedHouse();
+	}
+	
+	public void buyStreetStationOrCompany () {
+		int position = playerPos.get(players.get(turn));
+		possessions.get(position).replace(cards.get(position), turn);
+	}
+
+	public boolean checkStreetRow(int position, int player) {
+		HashMap<Card, Integer> street = possessions.get(position); //ottengo la via di 2/3 case
+		for (Integer value : street.values()) { //itera sui valori dello street
+			if (value != player) return false;
+			else continue;
+		}
+		return true;
+	}	
+	
+	public HashMap<Integer, Card> getCards() {
+		return cards;
+	}
+	
+	public HashMap<Player, Integer> getPlayerPos() {
+		return playerPos;
+	}
+	
+	public boolean hasPosChanged (int prevPos) {
+		return (playerPos.get(players.get(turn)) == prevPos);
+	}
+	
+	public void putPlayerInJail (int player) {
+		players.get(player).putInJail();
+		playerPos.replace(players.get(player), 10);
+	}
+	
+	public ArrayList<Player> getPlayers() {
+		return players;
+	}
+	
+	public boolean isStreetBuildable () {
+		if (checkStreetRow(playerPos.get(players.get(turn)), turn)) return true;
+		else return false;
+	}
+	
+	public boolean isStreetCompanyStationBuyable () {
+		int position = playerPos.get(players.get(turn));
+		Card card = cards.get(position);
+		if (possessions.get(position).get(card) == NO_ONE_HAS_THIS) return true;
+		else return false;
+	}
 }

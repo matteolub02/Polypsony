@@ -4,7 +4,7 @@
     <card>
         <name>Avanza fino al via! (ritirate 200M)</name>
         <action>advanceTo</action>
-        <amount>40</amount>
+        <amount>0</amount>
     </card>
     <card>
         <name>Hai dedicato il tempo per stare con i vicini più anziani, incassate 100M</name>
@@ -17,7 +17,7 @@
         <amount>50</amount>
     </card>
     <card>
-        <name>Organizzate un gruppo per pulire il percorso pedonale della vostra città. Incasate 50M</name>
+        <name>Organizzate un gruppo per pulire il percorso pedonale della vostra città. Incassate 50M</name>
         <action>collect</action>
         <amount>50</amount>
     </card>
@@ -60,7 +60,7 @@
         <amount>200</amount>
     </card>
     <card>
-        <name>Riparazioni previste! Pagate 40M per ogni casa che possedete, 80M per alberghi</name>
+        <name>Riparazioni previste! Pagate 40M per ogni casa che possedete</name>
         <action>payByHouses</action>
         <amount>40</amount>
     </card>
@@ -72,11 +72,11 @@
 </communitychest>
 <chances>
 	    <card>
-        <name> Avanzate fino alla prossima stazione! Se libera, potete acquistarla, altrimenti pagate il proprietario il doppio del noleggio. Se passate dal via ritirate 200M</name>
+        <name>Avanzate fino alla prossima stazione! Se libera, potete acquistarla, altrimenti pagate il proprietario il doppio del noleggio. Se passate dal via ritirate 200M</name>
         <action>advanceToNextStation</action> 
     </card>
     <card>
-        <name>Eseguite lavori di manutenzione su tutti i vostri edifici, 25M per ogni casa, 50M per ogni albergo</name>
+        <name>Eseguite lavori di manutenzione su tutti i vostri edifici, 25M per ogni casa</name>
         <action>payByHouses</action>
         <amount>25</amount>
     </card>
@@ -103,7 +103,7 @@
     <card>
         <name>Andate avanti fino al via! Ritirate 200M!</name>
         <action>advanceTo</action>
-        <amount>40</amount>
+        <amount>0</amount>
     </card>
     <card>
         <name>Andate diretto in prigione! Non passate dal via</name>
