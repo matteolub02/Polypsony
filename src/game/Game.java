@@ -2,6 +2,7 @@ package game;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 import javax.xml.stream.XMLStreamException;
 
@@ -28,6 +29,10 @@ public class Game {
 		}
 	}
 	
+	/**
+	 * @param value (valore dadi)
+	 * Sposta il giocatore in avanti di value caselle.
+	 */
 	public void changePlayerPos (int value) {
 		Player playerPlaying = players.get(turn);
 		dicesValue = value; //fondamentale per compagnie
@@ -36,10 +41,26 @@ public class Game {
 		else playerPos.replace(playerPlaying, (playerPos.get(playerPlaying) + value) - 39);
 	}
 	
+	/**
+	 * @param value (posizione in cui spostare)
+	 * Sposta il giocatore in una determinata posizione.
+	 */
 	public void changePlayerPosToSpecifiedPos (int value) {
 		playerPos.replace(players.get(turn), value);
 	}
-
+	
+	/**
+	 * @return stringa descrittiva carta
+	 * In base alla posizione:
+	 * 1. Tassa: messaggio e quanto viene pagato
+	 * 2. Probabilità o imprevisti: effetto carta
+	 * 3. Street: 
+	 * 		- Se di un giocatore, si paga
+	 * 		- Se libero, si può acquistare
+	 * 		- Se in row, si può costruire
+	 * 4. Company/Station: come prima, solo con controlli specifici della station e company
+	 * 5. NO_EFF (start, jail, free parking, go to jail)
+	 */
 	public String cardEffect () {
 		
 		int position = playerPos.get(players.get(turn));
@@ -214,6 +235,9 @@ public class Game {
 		return "Errore di lettura di carta";
 	}
 	
+	/**
+	 * @return se viene eliminato giocatore (se ha perso)
+	 */
 	public boolean removePlayer () {
 		if (players.get(turn).getSavings() <= 0) {
 			playerPos.remove(players.get(turn));
@@ -225,6 +249,52 @@ public class Game {
 		else return false;
 	}
 	
+	/**
+	 * @return status prigione del giocatore
+	 */
+	public boolean checkJailStatusPlayerPlaying () {
+		return players.get(turn).isInJail();
+	}
+	
+	/**
+	 * @return se ha dei pass per uscire di prigione
+	 */
+	public boolean checkHasGetOutOfJailFree () {
+		return (players.get(turn).getGetOutOfJailFreeNumber() > 0);
+	}
+	
+	/**
+	 * Rimuove giocatore dalla prigione usando pass
+	 */
+	public void removePlayerFromJailForFree () {
+		players.get(turn).usedGetOutOfJailFree();
+	}
+	
+	/**
+	 * @return se giocatore ha perso dopo essere uscito di prigione
+	 * Rimuove giocatore dalla prigione pagando 50 M
+	 */
+	public boolean removePlayerFromJailNotForFree () {
+		players.get(turn).removeMoneyFromSaving(50);
+		if (removePlayer()) {
+			return true;
+		}
+		else {
+			players.get(turn).freeFromJail();
+			return false;
+		}
+	}
+	
+	//DADI
+	public int dices () {
+		Random rnd = new Random();
+		int dice_one = rnd.nextInt(1, 7), dice_two = rnd.nextInt(1, 7);
+		return (dice_one + dice_two);
+	}
+	
+	/*
+	 * Forza la rimozione di un giocatore (ad esempio se esce dalla partita)
+	 */
 	public void forceRemovePlayer (int player) {
 		playerPos.remove(players.get(player));
 		players.remove(player);
@@ -232,6 +302,9 @@ public class Game {
 		changeOrderPossessions (player);
 	}
 	
+	/*
+	 * Imposta correttamente possessions dopo che esce player
+	 */
 	public void changeOrderPossessions (int player) {
 		for (HashMap<Card, Integer> poss : possessions.values()) {
 			for (Card value : poss.keySet()) {
@@ -243,6 +316,9 @@ public class Game {
 		if (turn > player) turn -= 1;
 	}
 	
+	/*
+	 * Resetta possessions di player uscito
+	 */
 	public void resetPlayerPossessions (int player) {
 		for (HashMap<Card, Integer> poss : possessions.values()) {
 			for (Card value : poss.keySet()) {
@@ -262,10 +338,6 @@ public class Game {
 		else turn = 0;
 	}
 	
-	public int getTurn() {
-		return turn;
-	}
-
 	private void initializePossessions () {
 
 		HashMap<Card, Integer> brownStreets = new HashMap<>();
@@ -360,7 +432,25 @@ public class Game {
 		Street street = (Street)cards.get(position);
 		int houseValue = street.getHouse() / 2;
 		players.get(turn).putMoneyInSaving(houseValue * street.getHousesNumber());
+		players.get(turn).soldHouses(street.getHousesNumber());
 		street.removeHouse();
+	}
+	
+	//solo se ha 0 case sopra, necessario metodo che controlli che non ci siano case su altre proprietà
+	public void sellStreetStationCompany (int position) {
+		switch (cards.get(position).getType()) {
+		case Card.STREET:
+			Street street = (Street)cards.get(position);
+			possessions.get(position).replace(street, NO_ONE_HAS_THIS);
+			players.get(turn).putMoneyInSaving(street.getCost() / 2);
+			break;
+		case Card.STATION:
+		case Card.COMPANY:
+			CompanyAndStation c = (CompanyAndStation)cards.get(position);
+			possessions.get(position).replace(c, NO_ONE_HAS_THIS);
+			players.get(turn).putMoneyInSaving(c.getCost() / 2);
+			break;
+		}
 	}
 	
 	public void buildHouse (int position) {
@@ -369,11 +459,14 @@ public class Game {
 			players.get(turn).buildedHouse();
 	}
 	
-	public void buyStreetStationOrCompany () {
+	public void buyStreetStationOrCompany () {	
 		int position = playerPos.get(players.get(turn));
 		possessions.get(position).replace(cards.get(position), turn);
 	}
-
+	
+	/*
+	 * @return se street sta in row
+	 */
 	public boolean checkStreetRow(int position, int player) {
 		HashMap<Card, Integer> street = possessions.get(position); //ottengo la via di 2/3 case
 		for (Integer value : street.values()) { //itera sui valori dello street
@@ -382,15 +475,7 @@ public class Game {
 		}
 		return true;
 	}	
-	
-	public HashMap<Integer, Card> getCards() {
-		return cards;
-	}
-	
-	public HashMap<Player, Integer> getPlayerPos() {
-		return playerPos;
-	}
-	
+
 	public boolean hasPosChanged (int prevPos) {
 		return (playerPos.get(players.get(turn)) == prevPos);
 	}
@@ -398,10 +483,6 @@ public class Game {
 	public void putPlayerInJail (int player) {
 		players.get(player).putInJail();
 		playerPos.replace(players.get(player), 10);
-	}
-	
-	public ArrayList<Player> getPlayers() {
-		return players;
 	}
 	
 	public boolean isStreetBuildable () {
@@ -415,4 +496,29 @@ public class Game {
 		if (possessions.get(position).get(card) == NO_ONE_HAS_THIS) return true;
 		else return false;
 	}
+
+	public boolean isGameEnded () {
+		return (players.size() == 1);
+	}
+	
+	public Player winner () {
+		return players.get(0);
+	}
+	
+	public HashMap<Integer, Card> getCards() {
+		return cards;
+	}
+	
+	public HashMap<Player, Integer> getPlayerPos() {
+		return playerPos;
+	}
+		
+	public ArrayList<Player> getPlayers() {
+		return players;
+	}
+	
+	public int getTurn() {
+		return turn;
+	}
+
 }

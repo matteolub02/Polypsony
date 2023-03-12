@@ -48,6 +48,7 @@ public class Player {
 	
 	public void usedGetOutOfJailFree () {
 		getOutOfJailFree--;
+		freeFromJail();
 	}
 	
 	public int getGetOutOfJailFreeNumber () {
@@ -65,6 +66,10 @@ public class Player {
 	public void buildedHouse () {
 		buildedHouses++;
 	}
-
+	
+	public boolean soldHouses (int soldHouses) {
+		buildedHouses -= soldHouses;
+		return (buildedHouses >= 0);
+	}
 
 }	

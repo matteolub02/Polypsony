@@ -9,7 +9,7 @@ import cards.Card;
 
 public class Main {
 	
-	private static final int pos = 37;
+	private static final int pos = 30;
 	
 	public static void main (String args[]) throws XMLStreamException {
 		ArrayList<Player> players = new ArrayList<>();
@@ -17,14 +17,11 @@ public class Main {
 		players.add(new Player("Paolo"));
 		players.add(new Player("Giovanni"));
 		Game game = new Game(players, new HashMap<Integer, Card>());
-		game.nextTurn();
-		game.nextTurn();
-		System.out.println(game.getTurn());
 		game.changePlayerPos(pos);
-		game.buyStreetStationOrCompany();
-		game.forceRemovePlayer(0);
-		System.out.println(game.getPlayerPos() + "" + game.getTurn());
-		System.out.println(game.isStreetCompanyStationBuyable());
+		System.out.println(game.cardEffect());
+		System.out.println(game.checkJailStatusPlayerPlaying());
+		game.removePlayerFromJailNotForFree();
+		System.out.println(players.get(0).getSavings() + " " + game.cardEffect());
 		
 
 	}
