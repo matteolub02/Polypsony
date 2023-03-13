@@ -1,15 +1,17 @@
 package game;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
 import javax.xml.stream.XMLStreamException;
-
 import cards.*;
+import server.Player;
 
-public class Game {
-	
+public class Game implements Serializable {
+
+	private static final long serialVersionUID = 1;
 	private static final int STATION_RENT_INITIAL = 25, COMPANY_FIRST_MULTIPLIER = 4,
 			COMPANY_SECOND_MULTIPLIER = 10;
 	public static final int NO_ONE_HAS_THIS = -1;
