@@ -10,6 +10,8 @@ import javax.swing.JTextArea;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class GameChat extends JPanel {
 
@@ -18,10 +20,22 @@ public class GameChat extends JPanel {
 
 	public GameChat() {
 		
+		JTextArea textArea = new JTextArea();
+
 		textField = new JTextField();
+		textField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					//textArea.append(textField.getText() + "\n");
+					/*
+					 * TODO: invia stringa al server per poter inviare messaggio
+					 */
+				}
+			}
+		});
 		textField.setColumns(10);
 		JButton sendMsg = new JButton("Invia msg");
-		JTextArea textArea = new JTextArea();
 		JScrollPane scrollPane = new JScrollPane();
 		GroupLayout groupLayout = new GroupLayout(this);
 		textArea.setLineWrap(true); //per far "fittare" il testo nella text area
@@ -31,7 +45,10 @@ public class GameChat extends JPanel {
 		textArea.setEditable(false);
 		sendMsg.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				textArea.append(textField.getText() + "\n");
+				//textArea.append(textField.getText() + "\n");
+				/*
+				 * TODO: stesso meccanismo dell'enter di prima
+				 */
 			}
 		});
 		

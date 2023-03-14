@@ -55,11 +55,11 @@ public class Game implements Serializable {
 	 * @return stringa descrittiva carta
 	 * In base alla posizione:
 	 * 1. Tassa: messaggio e quanto viene pagato
-	 * 2. Probabilità o imprevisti: effetto carta
+	 * 2. Probabilitï¿½ o imprevisti: effetto carta
 	 * 3. Street: 
 	 * 		- Se di un giocatore, si paga
-	 * 		- Se libero, si può acquistare
-	 * 		- Se in row, si può costruire
+	 * 		- Se libero, si puï¿½ acquistare
+	 * 		- Se in row, si puï¿½ costruire
 	 * 4. Company/Station: come prima, solo con controlli specifici della station e company
 	 * 5. NO_EFF (start, jail, free parking, go to jail)
 	 */
@@ -287,7 +287,7 @@ public class Game implements Serializable {
 		}
 	}
 	
-	//DADI
+	//DADI 
 	public int dices () {
 		Random rnd = new Random();
 		int dice_one = rnd.nextInt(1, 7), dice_two = rnd.nextInt(1, 7);
@@ -423,7 +423,7 @@ public class Game implements Serializable {
 	}
 	
 	public int countCompaniesOfAPlayer (int player, int pos) {
-		int count = 0; //Finisce sulla compagnia, se è sua non paga e non viene neanche invocato, se non è sua viene inviato numero player per conteggio
+		int count = 0; //Finisce sulla compagnia, se ï¿½ sua non paga e non viene neanche invocato, se non ï¿½ sua viene inviato numero player per conteggio
 		HashMap<Card, Integer> companies = possessions.get(pos);	
 		if (companies.get(cards.get(12)) == player) count++;
 		if (companies.get(cards.get(28)) == player) count++;
@@ -443,7 +443,7 @@ public class Game implements Serializable {
 		street.removeHouse();
 	}
 	
-	//solo se ha 0 case sopra, necessario metodo che controlli che non ci siano case su altre proprietà
+	//solo se ha 0 case sopra, necessario metodo che controlli che non ci siano case su altre proprietï¿½
 	public void sellStreetStationCompany (int position) {
 		switch (cards.get(position).getType()) {
 		case Card.STREET:
@@ -498,7 +498,7 @@ public class Game implements Serializable {
 	}
 	
 	/*
-	 * Se ci sono delle case costruite, non si può vendere la via. 
+	 * Se ci sono delle case costruite, non si puï¿½ vendere la via. 
 	 */
 	public boolean isStreetSellable() {
 		if (!checkStreetRow(playerPos.get(players.get(turn)), turn)) return true;
