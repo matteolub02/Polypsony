@@ -497,6 +497,22 @@ public class Game implements Serializable {
 		else return false;
 	}
 	
+	/*
+	 * Se ci sono delle case costruite, non si può vendere la via. 
+	 */
+	public boolean isStreetSellable() {
+		if (!checkStreetRow(playerPos.get(players.get(turn)), turn)) return true;
+		else {
+			HashMap<Card, Integer> street = possessions.get(playerPos.get(players.get(turn)));
+			for (Card card : street.keySet()) {
+				Street s = (Street) card;
+				if (s.getHousesNumber() > 0) return false;
+			}
+			
+			return true;
+		}
+	}
+	
 	public boolean isStreetCompanyStationBuyable () {
 		int position = playerPos.get(players.get(turn));
 		Card card = cards.get(position);
