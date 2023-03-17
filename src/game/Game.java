@@ -7,7 +7,6 @@ import java.util.Random;
 
 import javax.xml.stream.XMLStreamException;
 import cards.*;
-import server.Player;
 
 public class Game implements Serializable {
 
@@ -19,7 +18,7 @@ public class Game implements Serializable {
 	private ArrayList<Player> players = null;
 	private HashMap<Integer, Card> cards = null;
 	private HashMap<Integer, HashMap<Card, Integer>> possessions = new HashMap<>();
-	private int turn = 0;
+	private int turn = 0; 
 	private int dicesValue = 0;
 	
 	public Game (ArrayList<Player> players) throws XMLStreamException {
@@ -345,74 +344,6 @@ public class Game implements Serializable {
 		else turn = 0;
 	}
 	
-	private void initializePossessions () {
-
-		HashMap<Card, Integer> brownStreets = new HashMap<>();
-		HashMap<Card, Integer> azureStreets = new HashMap<>();
-		HashMap<Card, Integer> purpleStreets = new HashMap<>();
-		HashMap<Card, Integer> orangeStreets = new HashMap<>();
-		HashMap<Card, Integer> redStreets = new HashMap<>();
-		HashMap<Card, Integer> yellowStreets = new HashMap<>();
-		HashMap<Card, Integer> greenStreets = new HashMap<>();
-		HashMap<Card, Integer> blueStreets = new HashMap<>();
-		HashMap<Card, Integer> stations = new HashMap<>();
-		HashMap<Card, Integer> companies = new HashMap<>();
-		
-		for (int i = 0; i < cards.size(); i++) {
-			switch(cards.get(i).getType()) {
-			case Card.STREET:
-				Street street = (Street) cards.get(i);
-				switch(street.getColor()) {
-				case "BROWN":
-					possessions.put(i, brownStreets); //i pos della casella, streets colore
-					brownStreets.put(street, NO_ONE_HAS_THIS);
-					break;
-				case "AZURE":
-					possessions.put(i, azureStreets);
-					azureStreets.put(street, NO_ONE_HAS_THIS);
-					break;
-				case "PURPLE":
-					possessions.put(i, purpleStreets);
-					purpleStreets.put(street, NO_ONE_HAS_THIS);
-					break;
-				case "ORANGE":
-					possessions.put(i, orangeStreets);
-					orangeStreets.put(street, NO_ONE_HAS_THIS);
-					break;
-				case "RED":
-					possessions.put(i, redStreets);
-					redStreets.put(street, NO_ONE_HAS_THIS);
-					break;
-				case "YELLOW":
-					possessions.put(i, yellowStreets);
-					yellowStreets.put(street, NO_ONE_HAS_THIS);
-					break;
-				case "GREEN":
-					possessions.put(i, greenStreets);
-					greenStreets.put(street, NO_ONE_HAS_THIS);
-					break;
-				case "BLUE":
-					possessions.put(i, blueStreets);
-					blueStreets.put(street, NO_ONE_HAS_THIS);
-					break;
-				}
-				break;
-			case Card.COMPANY:
-				CompanyAndStation company = (CompanyAndStation)cards.get(i);
-				possessions.put(i, companies);
-				companies.put(company, NO_ONE_HAS_THIS);
-				break;
-			case Card.STATION:
-				CompanyAndStation station = (CompanyAndStation)cards.get(i);
-				possessions.put(i, stations);
-				stations.put(station, NO_ONE_HAS_THIS);
-				break;
-			}
-				
-		}
-		
-	}	
-	
 	public int countStationsOfAPlayer (int player, int pos) {
 		int count = 0;
 		HashMap<Card, Integer> stations = possessions.get(pos);
@@ -555,4 +486,73 @@ public class Game implements Serializable {
 	public HashMap<Integer, HashMap<Card, Integer>> getPossessions() {
 		return possessions;
 	}
+	
+	
+	private void initializePossessions () {
+
+		HashMap<Card, Integer> brownStreets = new HashMap<>();
+		HashMap<Card, Integer> azureStreets = new HashMap<>();
+		HashMap<Card, Integer> purpleStreets = new HashMap<>();
+		HashMap<Card, Integer> orangeStreets = new HashMap<>();
+		HashMap<Card, Integer> redStreets = new HashMap<>();
+		HashMap<Card, Integer> yellowStreets = new HashMap<>();
+		HashMap<Card, Integer> greenStreets = new HashMap<>();
+		HashMap<Card, Integer> blueStreets = new HashMap<>();
+		HashMap<Card, Integer> stations = new HashMap<>();
+		HashMap<Card, Integer> companies = new HashMap<>();
+		
+		for (int i = 0; i < cards.size(); i++) {
+			switch(cards.get(i).getType()) {
+			case Card.STREET:
+				Street street = (Street) cards.get(i);
+				switch(street.getColor()) {
+				case "BROWN":
+					possessions.put(i, brownStreets); //i pos della casella, streets colore
+					brownStreets.put(street, NO_ONE_HAS_THIS);
+					break;
+				case "AZURE":
+					possessions.put(i, azureStreets);
+					azureStreets.put(street, NO_ONE_HAS_THIS);
+					break;
+				case "PURPLE":
+					possessions.put(i, purpleStreets);
+					purpleStreets.put(street, NO_ONE_HAS_THIS);
+					break;
+				case "ORANGE":
+					possessions.put(i, orangeStreets);
+					orangeStreets.put(street, NO_ONE_HAS_THIS);
+					break;
+				case "RED":
+					possessions.put(i, redStreets);
+					redStreets.put(street, NO_ONE_HAS_THIS);
+					break;
+				case "YELLOW":
+					possessions.put(i, yellowStreets);
+					yellowStreets.put(street, NO_ONE_HAS_THIS);
+					break;
+				case "GREEN":
+					possessions.put(i, greenStreets);
+					greenStreets.put(street, NO_ONE_HAS_THIS);
+					break;
+				case "BLUE":
+					possessions.put(i, blueStreets);
+					blueStreets.put(street, NO_ONE_HAS_THIS);
+					break;
+				}
+				break;
+			case Card.COMPANY:
+				CompanyAndStation company = (CompanyAndStation)cards.get(i);
+				possessions.put(i, companies);
+				companies.put(company, NO_ONE_HAS_THIS);
+				break;
+			case Card.STATION:
+				CompanyAndStation station = (CompanyAndStation)cards.get(i);
+				possessions.put(i, stations);
+				stations.put(station, NO_ONE_HAS_THIS);
+				break;
+			}
+				
+		}
+		
+	}	
 }

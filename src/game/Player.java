@@ -1,4 +1,4 @@
-package server;
+package game;
 
 public class Player {
 	
@@ -7,11 +7,10 @@ public class Player {
 	private boolean isInJail = false;
 	private int getOutOfJailFree = 0;
 	private int buildedHouses = 0;
-
-	public Player(String name, String ip) {
+	
+	public Player(String name) {
 		this.name = name;
 		savings = 1500;
-
 	}
 	
 	public String getName() {
@@ -70,5 +69,7 @@ public class Player {
 	public boolean soldHouses (int soldHouses) {
 		buildedHouses -= soldHouses;
 		return (buildedHouses >= 0);
-	}
+	}	
+	
 }	
+
