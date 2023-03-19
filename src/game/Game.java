@@ -51,8 +51,8 @@ public class Game implements Serializable {
 	}
 	
 	/**
-	 * @param value (valore dadi)
-	 * Sposta il giocatore in avanti di value caselle.
+	 * @param value 
+	 * @summary Move player to prevPos + dicesValue
 	 */
 	public void changePlayerPos (int value) {
 		Player playerPlaying = players.get(turn);
@@ -63,18 +63,18 @@ public class Game implements Serializable {
 	}
 	
 	/**
-	 * @param value (posizione in cui spostare)
-	 * Sposta il giocatore in una determinata posizione.
+	 * @param value 
+	 * Moves player to new pos.
 	 */
 	public void changePlayerPosToSpecifiedPos (int value) {
 		playerPos.replace(players.get(turn), value);
 	}
 	
 	/**
-	 * @return stringa descrittiva carta
+	 * @return descriptive string of card's effect
 	 * In base alla posizione:
-	 * 1. Tassa: messaggio e quanto viene pagato
-	 * 2. Probabilit� o imprevisti: effetto carta
+	 * 1. Tax: messaggio e quanto viene pagato
+	 * 2. Chances or Community chest: effetto carta
 	 * 3. Street: 
 	 * 		- Se di un giocatore, si paga
 	 * 		- Se libero, si pu� acquistare
@@ -262,7 +262,7 @@ public class Game implements Serializable {
 	}
 	
 	/**
-	 * @return se viene eliminato giocatore (se ha perso)
+	 * @return true if player is removed, false if not
 	 */
 	public boolean removePlayer () {
 		if (players.get(turn).getSavings() <= 0) {
@@ -276,29 +276,28 @@ public class Game implements Serializable {
 	}
 	
 	/**
-	 * @return status prigione del giocatore
+	 * @return true if player is in Jail
 	 */
 	public boolean checkJailStatusPlayerPlaying () {
 		return players.get(turn).isInJail();
 	}
 	
 	/**
-	 * @return se ha dei pass per uscire di prigione
+	 * @return true if player has getoutofjailforfreepass
 	 */
 	public boolean checkHasGetOutOfJailFree () {
 		return (players.get(turn).getGetOutOfJailFreeNumber() > 0);
 	}
 	
 	/**
-	 * Rimuove giocatore dalla prigione usando pass
+	 * Removes player from jail using his pass.
 	 */
 	public void removePlayerFromJailForFree () {
 		players.get(turn).usedGetOutOfJailFree();
 	}
 	
 	/**
-	 * @return se giocatore ha perso dopo essere uscito di prigione
-	 * Rimuove giocatore dalla prigione pagando 50 M
+	 * @return true if player has lost after leaving jail (50M fee)
 	 */
 	public boolean removePlayerFromJailNotForFree () {
 		players.get(turn).removeMoneyFromSaving(50);
@@ -310,23 +309,14 @@ public class Game implements Serializable {
 			return false;
 		}
 	}
-	
-	//DADI 
+
 	public int dices () {
 		Random rnd = new Random();
 		int dice_one = rnd.nextInt(1, 7), dice_two = rnd.nextInt(1, 7);
 		dicesValue = dice_one + dice_two;
 		return (dicesValue);
 	}
-	
-	/*
-	 * Forza la rimozione di un giocatore (ad esempio se esce dalla partita)
-	 * Bisogna tenere controllato questo metodo in quanto una volta rimosso il giocatore
-	 * bisogna controllare il comportamento di turn
-	 * Se rimuovo un giocatore, il turn va avanti di uno nell'arraylist quindi tocca al giocatore dopo 
-	 * e non al giocatore di diritto, questo vuol dire che bisogna aumentare il turno SOLTANTO se il giocatore
-	 * non viene eliminato!
-	 */
+
 	public void forceRemovePlayer (int player) {
 		playerPos.remove(players.get(player));
 		players.remove(player);
@@ -335,8 +325,8 @@ public class Game implements Serializable {
 	}
 	
 	/*
-	 * Imposta correttamente possessions dopo che esce player
-	 */
+	 * Reinitialize players' possessions after someone's removal.
+	*/
 	public void changeOrderPossessions (int player) {
 		for (HashMap<Card, Integer> poss : possessions.values()) {
 			for (Card value : poss.keySet()) {
@@ -349,7 +339,7 @@ public class Game implements Serializable {
 	}
 	
 	/*
-	 * Resetta possessions di player uscito
+	 * Resets player's possessions after his removal.
 	 */
 	public void resetPlayerPossessions (int player) {
 		for (HashMap<Card, Integer> poss : possessions.values()) {
@@ -429,7 +419,7 @@ public class Game implements Serializable {
 	}
 	
 	/*
-	 * @return se street sta in row
+	 * @return true if street is in row
 	 */
 	public boolean checkStreetRow(int position, int player) {
 		HashMap<Card, Integer> street = possessions.get(position); //ottengo la via di 2/3 case
@@ -454,8 +444,9 @@ public class Game implements Serializable {
 		else return false;
 	}
 	
-	/*
-	 * Se ci sono delle case costruite, non si pu� vendere la via. 
+
+	/**
+	 * @return false if the street has houses on itself or if it's not one of the player's possessions.
 	 */
 	public boolean isStreetSellable() {
 		int pos = playerPos.get(getPlayerPlaying());

@@ -16,6 +16,11 @@ import cards.*;
 import game.*;
 
 
+/**
+ * @author 736418
+ * @summary Its job is to control the server, by accepting new clients and by managing new data from ObjectXStream.
+ *
+ */
 public class ControllerServer {
 	
 	final static int SERVER_PORT = 3019;
@@ -26,6 +31,10 @@ public class ControllerServer {
 	private static final String SERVER = "Server: ";
 	private boolean done = false;
 
+	/**
+	 * @throws IOException
+	 * @summary It instantiates the server, it creates a new ServerSocket and it starts to accept new clients (max 4).
+	 */
 	public ControllerServer () throws IOException {
 		System.out.println("Creato controller server.");
 		
@@ -55,6 +64,22 @@ public class ControllerServer {
 		
 	}
 	
+	/**
+	 * @throws IOException
+	 * @throws XMLStreamException
+	 * @throws InterruptedException
+	 * 
+	 * @summary 
+	 * It starts the game and it manages it with a do while loop. Behaviour:
+	 * <ol>
+	 * <li>Starts by checking if player is in jail, if so then go to 2, otherwise 3.</li>
+	 * <li>Remove player from Jail, if he doesn't have enough money then he loses (check how does a player get out from jail). Go to last step.</li>
+	 * <li>Move player to nextPos (prevPos + dicesValue) and read effectCard.</li>
+	 * <li>If the card makes the player move to another position, then repeat previous step, otherwise go to next step.</li>
+	 * <li>If the card is a Street, Station or Company that is not bought by someone else, then ask for player for his decision (buy, sell, buildHouse, endturn).Otherwise, go to next step.</li>
+	 * <li>Change turn.</li>
+	 * </ol>
+	 */
 	public void startGame() throws IOException, XMLStreamException, InterruptedException {
 		s.broadcastObj(SERVER + "Inizia il gioco!");
 		game = new Game(players);
@@ -221,18 +246,12 @@ public class ControllerServer {
 		Thread.currentThread().interrupt();
 		System.exit(0);
 	}
-	
+	/*
+	 * It check the update.
+	 */
 	public void handleUpdate (Update up) throws IOException {
 		System.out.println("Update arrivato.");
 		switch (up.getType()) {
-		/*
-		 * 5 tipi:
-		 * 1 costruisci casa
-		 * 2 compra proprietà
-		 * 3 vendi proprietà
-		 * 4 vendi case
-		 * 5 finisci turno
-		 */
 		case 1: 
 			Street street = (Street) game.getCards().get(game.getPlayerPlayingPos());
 			game.buildHouse(game.getPlayerPlayingPos());
@@ -270,7 +289,7 @@ public class ControllerServer {
 		}
 	}
 	
-	
+	//Remove player from the game (disconnection)
 	public void removePlayer(Player player) {
 		if (game != null) game.forceRemovePlayer(players.indexOf(player));
 	}
@@ -285,6 +304,12 @@ public class ControllerServer {
 			connections = new ArrayList<>();
 		}
 		
+		/*
+		 * The client has an important value which is ID, this value is important because everytime a players needs to make a choice
+		 * the client checks for the equivalence between ID and game.getTurn().
+		 * If a Player loses, then he has to leave the match, if we don't set this value to -1, the game will let him play for another player.
+		 * TODO: check if it changes other players ID
+		 */
 		public void setIdPlayerToMinus1(int player) {
 			ConnectionHandler ch =  connections.get(player);
 			Integer value = -1;
@@ -295,8 +320,21 @@ public class ControllerServer {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			
+			//CHANGES ID OF i-CLIENTS WITH ID > PLAYER TO i - 1
+			for (int i = player + 1; i < connections.size(); i++) {
+				ConnectionHandler ch2 = connections.get(i);
+				try {
+					ch2.outData.writeObject(i - 1);
+					ch.outData.flush();
+					ch.outData.reset();
+				}
+				catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 		}
-		
+
 		@Override
 		public void run() {
 			try {

@@ -15,6 +15,11 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 
+/**
+ * @author 736418
+ * @summary Ask user to host the game or to connect to a server.
+ *
+ */
 public class HostOrConnectWindow extends JFrame {
 	
 	private static final long serialVersionUID = 1L;

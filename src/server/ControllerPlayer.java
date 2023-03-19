@@ -11,6 +11,11 @@ import game.*;
 import view.GameWindow;
 import view.Stats;
 
+/**
+ * @author 736418
+ * @summary It controls the Client and the User view.
+ *
+ */
 public class ControllerPlayer {
 
 	private Player player;
@@ -56,6 +61,7 @@ public class ControllerPlayer {
 		});
 	}
 	
+	//check if it can show buttons
 	public void checkIsMyTurn() {
 		
 		if (game.getTurn() == id && game.didCardEffect()) {

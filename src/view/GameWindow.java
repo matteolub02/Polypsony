@@ -29,6 +29,11 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
 import server.ControllerPlayer;
 
+/**
+ * @author 736418
+ * @summary It's the game's frame, in this frame we can interact with the game by pressing buttons or by sending msg through chat.
+ *
+ */
 public class GameWindow extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
@@ -44,6 +49,13 @@ public class GameWindow extends JFrame {
 		choiceButtons.setEverythingNotVisible();
 	}
 	
+	/**
+	 * @param one - buy property
+	 * @param two - buy house
+	 * @param three - sell property
+	 * @param four - sell houses
+	 * @summary It sets necessary buttons visible, so that the player can make his choice.
+	 */
 	public void setChoiceButtons(boolean one, boolean two, boolean three, boolean four) {
 		if (one) choiceButtons.setBuyPropertyVisible();
 		if (two) choiceButtons.setBuyHouseVisible();;
@@ -53,13 +65,10 @@ public class GameWindow extends JFrame {
 		choiceButtons.repaint();
 	}
 	
+	//repaints the gameMap
 	public void repaintMap(ArrayList<Integer> pos) {
 		gameMap.setPos(pos);
 		gameMap.repaint();
-		
-	}
-	
-	public void setButtonsForChoice() {
 		
 	}
 	
@@ -72,8 +81,8 @@ public class GameWindow extends JFrame {
 	}
 	
 	public void setWindow() {	
-		setTitle("Polypsony");
-		setIconImage((new ImageIcon("src/view/duck_img.jpg")).getImage());
+		setTitle("Polypsony"); //TITLE
+		setIconImage((new ImageIcon("src/view/duck_img.jpg")).getImage()); //ICON
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, WIDTH, HEIGHT);
 		setResizable(false);
@@ -94,6 +103,11 @@ public class GameWindow extends JFrame {
 
 	}
 	
+	
+	/**
+	 * @author 736418
+	 * @summary A simple game chat.
+	 */
 	class GameChat extends JPanel {
 
 		private static final long serialVersionUID = 1L;
@@ -171,6 +185,11 @@ public class GameWindow extends JFrame {
 		}
 	}
 	
+	/**
+	 * @author 736418
+	 * @summary The game map. TODO: upgrade with an SVG file so that it doesn't look like it came out from 1993.
+	 *
+	 */
 	class GameMap extends JPanel {
 		
 		private HashMap<Integer, Point> pixelPositions = new HashMap<Integer, Point>();
@@ -290,6 +309,12 @@ public class GameWindow extends JFrame {
 
 	}
 	
+	
+	/**
+	 * @author 736418
+	 * @summary ChoiceButtons for player, so that he can make his choice.
+	 *
+	 */
 	class ChoiceButtons extends JPanel {
 
 
