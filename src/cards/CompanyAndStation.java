@@ -1,7 +1,8 @@
 package cards;
 
 public class CompanyAndStation extends Card{
-	
+	private static final long serialVersionUID = 1L;
+
 	private int cost = 0;
 	
 	public CompanyAndStation(String name, int pos, int type) {

@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -9,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.GroupLayout;
@@ -23,11 +25,10 @@ import javax.swing.JTextField;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
-
 import server.ControllerPlayer;
 
 public class GameWindow extends JFrame {
-
+	
 	private static final long serialVersionUID = 1L;
 	private static final int HEIGHT = 660;
 	private static final int WIDTH = 1050;
@@ -35,9 +36,30 @@ public class GameWindow extends JFrame {
 	private JPanel contentPane;
 	private ChoiceButtons choiceButtons = new ChoiceButtons();;
 	private GameChat gameChat = new GameChat();
-	private GameMap gameMap = new GameMap(HEIGHT_MAP, WIDTH_MAP);
 	private ControllerPlayer c;
+	private GameMap gameMap = new GameMap(HEIGHT_MAP, WIDTH_MAP);
+	public void setChoiseButtonsNotVisible() {
+		choiceButtons.setEverythingNotVisible();
+	}
 	
+	public void setChoiceButtons(boolean one, boolean two, boolean three, boolean four) {
+		if (one) choiceButtons.setBuyPropertyVisible();
+		if (two) choiceButtons.setBuyHouseVisible();;
+		if (three) choiceButtons.setSellPropertyVisible();;
+		if (four) choiceButtons.setSellHousesVisible();;
+		choiceButtons.setEndTurnVisible();
+		choiceButtons.repaint();
+	}
+	
+	public void repaintMap(ArrayList<Integer> pos) {
+		gameMap.setPos(pos);
+		gameMap.repaint();
+		
+	}
+	
+	public void setButtonsForChoice() {
+		
+	}
 	
 	public void printMsgInChat (String msg) {
 		gameChat.printTextOnTextArea(msg);
@@ -149,13 +171,12 @@ public class GameWindow extends JFrame {
 	
 	class GameMap extends JPanel {
 		
-		
 		private HashMap<Integer, Point> pixelPositions = new HashMap<Integer, Point>();
 		private JLabel label = new JLabel();
 		private static final long serialVersionUID = 1L;
 		private static final ImageIcon mapImg = new ImageIcon("src/view/map.png");
 		private static final int FIRST_POS_X = 555, FIRST_POS_Y = 555;
-		
+		private ArrayList<Integer> positions = new ArrayList<>();
 		//606 603 TODO: cambiare con height e width
 		public GameMap(int height, int width) {
 			setPixelLocations();
@@ -167,11 +188,31 @@ public class GameWindow extends JFrame {
 			add(label);
 		}
 		
+		public void setPos (ArrayList<Integer> positions) {
+			this.positions = positions;
+		}
 		
 		//aggiungere valore boolean che al primo repaint diventa true (game inizia, pedine sulla mappa)
 		protected void paintChildren(Graphics g) {
 			  super.paintChildren(g);
-			  //g.fillRect(545, 545, 40, 40);
+			  
+			  for (int i = 0; i < positions.size(); i++) {
+				  g.setColor(Color.BLUE);
+				  switch (i) {
+				  case 0:
+					  g.fillOval(pixelPositions.get(positions.get(i)).x, pixelPositions.get(positions.get(i)).y, 10, 10);
+					  break;
+				  case 1:
+					  g.fillOval(pixelPositions.get(positions.get(i)).x, pixelPositions.get(positions.get(i)).y + 10, 10, 10);
+					  break;
+				  case 2:
+					  g.fillOval(pixelPositions.get(positions.get(i)).x + 10, pixelPositions.get(positions.get(i)).y, 10, 10);
+					  break;
+				  case 3:
+					  g.fillOval(pixelPositions.get(positions.get(i)).x + 10, pixelPositions.get(positions.get(i)).y + 10, 10, 10);
+					  break;
+				  }
+			  }
 			  
 			  /*
 			   * TODO: questo ciclo deve prendere in considerazione solo gli id dei giocatori presenti (da 0 a 4)
@@ -249,26 +290,108 @@ public class GameWindow extends JFrame {
 
 
 		private static final long serialVersionUID = 1L;
-		private JButton throwDices, sellProperty, buyProperty, buildHouse;
+		private JButton sellProperty, buyProperty, buildHouse, sellHouses, endTurn;
 		
 		public ChoiceButtons() {
 			setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 			
-			throwDices = new JButton("Lancia dadi");
-			add(throwDices);
-			
 			sellProperty = new JButton("Vendi"); //propriet� o casa
 			add(sellProperty);
+			sellProperty.setVisible(false);
+			
+			sellProperty.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					c.sellPropertyOfPlayerPlaying();
+					setEverythingNotVisible();
+				}
+				
+			});
 			
 			buyProperty = new JButton("Compra");
 			add(buyProperty);
+			buyProperty.setVisible(false);
+			
+			buyProperty.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					c.buyPropertyForPlayerPlaying();
+					setEverythingNotVisible();
+				}
+				
+			});
 			
 			buildHouse = new JButton("Costruisci");
 			add(buildHouse);
-			
-			
-		}
+			buildHouse.setVisible(false);
+			buildHouse.addActionListener(new ActionListener() {
 
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					c.buildHouse();
+					setEverythingNotVisible();
+				}
+				
+			});
+			
+			sellHouses = new JButton("Vendi tutte le case");
+			add(sellHouses);
+			sellHouses.setVisible(false);
+			
+			sellHouses.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					c.sellHouses();
+					setEverythingNotVisible();
+				}
+				
+			});
+			
+			endTurn = new JButton("Finisci il turno.");
+			add(endTurn);
+			endTurn.setVisible(false);
+			
+			endTurn.addActionListener( new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					c.endTurn();
+					setEverythingNotVisible();
+				}
+			});
+		}
+		
+		public void setSellPropertyVisible() {
+			sellProperty.setVisible(true);
+		}
+		
+		public void setBuyPropertyVisible() {
+			buyProperty.setVisible(true);
+		}
+		
+		public void setBuyHouseVisible() {
+			buildHouse.setVisible(true);
+		}
+		
+		public void setSellHousesVisible() {
+			sellHouses.setVisible(true);
+		}
+		
+		public void setEndTurnVisible() {
+			endTurn.setVisible(true);
+		}
+		
+		public void setEverythingNotVisible() {
+			sellProperty.setVisible(false);
+			sellHouses.setVisible(false);
+			buildHouse.setVisible(false);
+			buyProperty.setVisible(false);
+			endTurn.setVisible(false);
+			this.repaint();
+		}
 	}
 
 }

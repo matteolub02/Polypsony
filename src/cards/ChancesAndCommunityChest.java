@@ -8,6 +8,9 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
 public class ChancesAndCommunityChest extends Card{
+	
+	private static final long serialVersionUID = 1L;
+
 	public static final String PAY_TO_ALL = "payToAll"; 
 	public static final String GO_BACK = "goBack";
 	public static final String PAY_BY_HOUSES = "payByHouses"; 

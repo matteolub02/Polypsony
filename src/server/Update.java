@@ -1,32 +1,27 @@
 package server;
 
-public class Update {
-	
-	
-	private int type, player1, player2, newPos, dices;
-	private boolean buyable, sellable;
-	
-	public Update (int type) {
-		
-	}
+import java.io.Serializable;
+
+public class Update implements Serializable{
 	
 	/*
-	 * Questa classe rappresenta i singoli update inviati tra client e server.
-	 * Considerando la condizione di gioco, ci sono questi aggiornamenti:
-	 * -	Cambio turno (solo tipo)
-	 * -	Lancio dadi  (intero?)
-	 * -	Cambio posizione giocatore dell'attuale turno
-	 * -	Pagamento di un giocatore verso altro giocatore
-	 * -	Pagamento di un giocatore
-	 * -	Versamento nei confronti di un giocatore
-	 * -	Vendita di un possedimento
-	 * -	Acquisto di un possedimento
-	 * -	Fine turno (se non si vuole acquistare possedimento o casa/vendere)
-	 * -	Rimozione giocatore
-	 * -	Fine partita
-	 * -	Controllo se uscito di prigione
-	 * -	Acquistabile
-	 * - 	Vendibile
+	 * 5 tipi:
+	 * 1 costruisci casa
+	 * 2 compra proprietà
+	 * 3 vendi proprietà
+	 * 4 vendi case
+	 * 5 finisci turno
 	 */
+	
+	private static final long serialVersionUID = 1L;
+	private int type = -1;
+	
+	public Update (int type) {
+		this.type = type;
+	}
+	
+	public int getType() {
+		return type;
+	}
 	
 }

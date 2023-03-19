@@ -1,7 +1,8 @@
 package cards;
 
 public class Street extends Card{
-	
+	private static final long serialVersionUID = 1L;
+
 	private String color;
 	private int cost, rent, house;
 	private int houseNumber = 0;

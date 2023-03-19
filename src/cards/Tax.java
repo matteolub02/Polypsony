@@ -1,7 +1,8 @@
 package cards;
 
 public class Tax extends Card{
-	
+	private static final long serialVersionUID = 1L;
+
 	private int cost;
 	
 	public Tax(String name, int pos, int type, int cost) {

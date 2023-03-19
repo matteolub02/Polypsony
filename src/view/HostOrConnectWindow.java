@@ -6,7 +6,6 @@ import javax.swing.border.EmptyBorder;
 
 import server.ControllerPlayer;
 import server.ControllerServer;
-import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import javax.swing.JButton;
 import javax.swing.JTextField;
@@ -15,7 +14,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
-import java.net.UnknownHostException;
 
 public class HostOrConnectWindow extends JFrame {
 	
@@ -39,7 +37,11 @@ public class HostOrConnectWindow extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)  {
 				dispose();
-				cServer = new ControllerServer();
+				try {
+					cServer = new ControllerServer();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
 		contentPane.add(btnNewButton);
@@ -78,6 +80,14 @@ public class HostOrConnectWindow extends JFrame {
 		});
 		contentPane.add(txtIndirizzoIp);
 		txtIndirizzoIp.setColumns(10);
+	}
+
+	public ControllerServer getcServer() {
+		return cServer;
+	}
+
+	public ControllerPlayer getcPlayer() {
+		return cPlayer;
 	}
 
 }

@@ -1,7 +1,11 @@
 package cards;
 
-public class Card {
+import java.io.Serializable;
+
+public class Card implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
+
 	public static final int STREET = 0, TAX = 1, CHANCE = 2, COMMUNITY_CHEST = 3, NO_EFF = 4, STATION = 5, COMPANY = 6;
 
 	private String name;

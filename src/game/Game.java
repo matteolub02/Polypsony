@@ -9,8 +9,11 @@ import javax.xml.stream.XMLStreamException;
 import cards.*;
 
 public class Game implements Serializable {
-
-	private static final long serialVersionUID = 1;
+	
+	
+	private static final String WANNA_BUILD = "Volete costruire?";
+	private static final String WANNA_BUY = "Volete acquistare?";
+	private static final long serialVersionUID = 1L;
 	private static final int STATION_RENT_INITIAL = 25, COMPANY_FIRST_MULTIPLIER = 4,
 			COMPANY_SECOND_MULTIPLIER = 10;
 	public static final int NO_ONE_HAS_THIS = -1;
@@ -20,13 +23,30 @@ public class Game implements Serializable {
 	private HashMap<Integer, HashMap<Card, Integer>> possessions = new HashMap<>();
 	private int turn = 0; 
 	private int dicesValue = 0;
+	private boolean isCardEffectUsed;
 	
+	public boolean didCardEffect() {
+		return isCardEffectUsed;
+	}
+	
+	public void usedCardEffect() {
+		isCardEffectUsed = true;
+		
+	}
+	
+	public void resetCardEffectUsed () {
+		isCardEffectUsed = false;
+	}
+	public int getDicesValue() {
+		return dicesValue;
+	}
+
 	public Game (ArrayList<Player> players) throws XMLStreamException {
 		this.players = players;
 		cards = InitializeCards.initialize();
 		initializePossessions();
 		for (int i = 0; i < players.size(); i++) {
-			playerPos.put(players.get(i), 0); //posizione dei giocatori
+			playerPos.put(players.get(i), 0); 
 		}
 	}
 	
@@ -174,11 +194,11 @@ public class Game implements Serializable {
 				}
 			}
 			else if (streetPossession == NO_ONE_HAS_THIS) {
-				return "Volete acquistare?";
+				return WANNA_BUY;
 			}
 			else if (streetPossession == turn) {
 				if (checkStreetRow(position, turn) && street.getHousesNumber() < 5) {
-					return "Volete costruire?";
+					return WANNA_BUILD;
 				}
 				else {
 					return "Siete finiti su un vostro possedimento.";	
@@ -192,18 +212,20 @@ public class Game implements Serializable {
 				if (countCompaniesOfAPlayer(companyPossession, position) == 2) {
 					playerPaysAnotherPlayer(companyPossession,COMPANY_SECOND_MULTIPLIER * dicesValue);
 					return new String(playerPlaying.getName() + " paga " + (COMPANY_SECOND_MULTIPLIER * dicesValue) 
-							+ "M al giocatore " + players.get(companyPossession));
+							+ "M al giocatore " + players.get(companyPossession).getName());
 				}
 				else {
 					playerPaysAnotherPlayer(companyPossession,COMPANY_FIRST_MULTIPLIER * dicesValue);
 					return new String(playerPlaying.getName() + " paga " + (COMPANY_FIRST_MULTIPLIER * dicesValue) 
-							+ "M al giocatore " + players.get(companyPossession));
+							+ "M al giocatore " + players.get(companyPossession).getName());
 				}
 			}
 			else if (companyPossession == NO_ONE_HAS_THIS) {
-				return new String("Volete acquistare?");
+				return new String(WANNA_BUY);
 			}
-			else return new String("");
+			else if (companyPossession == turn) {
+				return new String("Siete finiti su un vostro possedimento.");
+			}
 			
 			
 		case Card.STATION:
@@ -214,7 +236,10 @@ public class Game implements Serializable {
 						+ "M al giocatore " + players.get(stationPossession).getName()));
 			}
 			else if (stationPossession == NO_ONE_HAS_THIS) {
-				return new String("Volete acquistare?"); 
+				return new String(WANNA_BUY); 
+			}
+			else if (stationPossession == turn) {
+				return new String("Siete finiti su un vostro possedimento.");
 			}
 			
 			
@@ -290,7 +315,8 @@ public class Game implements Serializable {
 	public int dices () {
 		Random rnd = new Random();
 		int dice_one = rnd.nextInt(1, 7), dice_two = rnd.nextInt(1, 7);
-		return (dice_one + dice_two);
+		dicesValue = dice_one + dice_two;
+		return (dicesValue);
 	}
 	
 	/*
@@ -340,7 +366,7 @@ public class Game implements Serializable {
 	}
 	
 	public void nextTurn() {
-		if ((turn + 1) < players.size()) turn += 1;
+		if ((turn + 1) < players.size()) turn = turn + 1;
 		else turn = 0;
 	}
 	
@@ -432,16 +458,34 @@ public class Game implements Serializable {
 	 * Se ci sono delle case costruite, non si pu� vendere la via. 
 	 */
 	public boolean isStreetSellable() {
-		if (!checkStreetRow(playerPos.get(players.get(turn)), turn)) return true;
-		else {
-			HashMap<Card, Integer> street = possessions.get(playerPos.get(players.get(turn)));
-			for (Card card : street.keySet()) {
-				Street s = (Street) card;
-				if (s.getHousesNumber() > 0) return false;
+		int pos = playerPos.get(getPlayerPlaying());
+		Street prop = (Street)cards.get(pos);
+		if (possessions.get(pos).get(prop) == turn) {
+			if (!checkStreetRow(playerPos.get(players.get(turn)), turn)) return true;
+			else {
+				HashMap<Card, Integer> street = possessions.get(playerPos.get(players.get(turn)));
+				for (Card card : street.keySet()) {
+					Street s = (Street) card;
+					if (s.getHousesNumber() > 0) return false;
+				}
+				
+				return true;
 			}
-			
-			return true;
 		}
+		else return false;
+		
+	}
+	
+	public boolean areThereHouses () {
+		Street s = (Street) cards.get(playerPos.get(getPlayerPlaying()));
+		return (s.getHousesNumber() > 0);
+	}
+	
+	public boolean isStationOrCompanySellable () {
+		int pos = getPlayerPlayingPos();
+		Card possessionCheck = cards.get(pos);
+		int possession = possessions.get(pos).get(possessionCheck);
+		return (possession == turn);
 	}
 	
 	public boolean isStreetCompanyStationBuyable () {
@@ -452,7 +496,7 @@ public class Game implements Serializable {
 	}
 
 	public boolean isGameEnded () {
-		return (players.size() == 1);
+		return (players.size() < 2);
 	}
 	
 	public Player winner () {
@@ -553,6 +597,6 @@ public class Game implements Serializable {
 			}
 				
 		}
-		
+	
 	}	
 }

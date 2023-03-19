@@ -18,7 +18,7 @@
         <street pos = "3">
             <color>BROWN</color>
             <name>San Polo Parco</name>
-            <cost>60</cost>
+            <cost>80</cost>
             <rent>4</rent>
             <house>50</house>
         </street>
@@ -186,10 +186,10 @@
 
         <!--COMPANIES-->
         <company pos = "28">
-            <name>Compagnia dell'acqua</name>
+            <name>Società idrica</name>
         </company>
         <company pos = "12">
-            <name>Compagnia dell'elettricita'</name>
+            <name>Società elettrica</name>
         </company>
 
         <!--CHANCE AND PROBABILITIES-->

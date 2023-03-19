@@ -1,6 +1,11 @@
 package game;
 
-public class Player {
+import java.io.Serializable;
+
+public class Player implements Serializable{
+	
+
+	private static final long serialVersionUID = 1L;
 	
 	private String name = null;
 	private int savings;
@@ -10,7 +15,7 @@ public class Player {
 	
 	public Player(String name) {
 		this.name = name;
-		savings = 1500;
+		savings = 100;
 	}
 	
 	public String getName() {
@@ -20,7 +25,7 @@ public class Player {
 	public int getSavings() {
 		return savings;
 	}
-
+	
 	public void putMoneyInSaving(int value) {
 		savings += value;
 	}
@@ -28,7 +33,7 @@ public class Player {
 	public void removeMoneyFromSaving(int value) {
 		savings -= value;
 	}
-	
+		
 	public void putInJail () {
 		isInJail = true;
 	}
