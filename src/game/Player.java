@@ -15,7 +15,7 @@ public class Player implements Serializable{
 	
 	public Player(String name) {
 		this.name = name;
-		savings = 100;
+		savings = 1500;
 	}
 	
 	public String getName() {

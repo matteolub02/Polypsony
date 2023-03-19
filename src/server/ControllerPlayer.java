@@ -87,7 +87,7 @@ public class ControllerPlayer {
 		String s = new String("Stats:\n");
 		if (game != null) for (Player p : game.getPlayers()) {
 			s += (p.getName() + ": Saving: " + p.getSavings() + "M" 
-					+ "\tHouse built: " + p.getBuildedHouses() + "\tPos: " + game.getPlayerPos().get(p)
+					+ "\tCase costruite: " + p.getBuildedHouses() + "\tPos: " + game.getPlayerPos().get(p)
 					+ "\nPass Jail: " + p.getGetOutOfJailFreeNumber() + "\n");
 		}
 		return s;

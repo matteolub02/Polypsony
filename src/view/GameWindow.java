@@ -1,8 +1,10 @@
 package view;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -198,6 +200,8 @@ public class GameWindow extends JFrame {
 			  
 			  for (int i = 0; i < positions.size(); i++) {
 				  g.setColor(Color.BLUE);
+				  Graphics2D g2 = (Graphics2D) g;
+				  g2.setStroke(new BasicStroke(3));
 				  switch (i) {
 				  case 0:
 					  g.fillOval(pixelPositions.get(positions.get(i)).x, pixelPositions.get(positions.get(i)).y, 10, 10);
@@ -235,7 +239,7 @@ public class GameWindow extends JFrame {
 							pixelPositions.put(j, new Point(FIRST_POS_X, FIRST_POS_Y));
 						}
 						else if (j == 1) {
-							pixelPositions.put(j, new Point(FIRST_POS_X - 80, FIRST_POS_Y));
+							pixelPositions.put(j, new Point(FIRST_POS_X - 75, FIRST_POS_Y));
 						}
 						else {
 							pixelPositions.put(j, new Point(pixelPositions.get(1).x - (48 * (j - 1)), FIRST_POS_Y));

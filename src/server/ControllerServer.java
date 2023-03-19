@@ -50,7 +50,6 @@ public class ControllerServer {
 		} catch (XMLStreamException e) {
 			e.printStackTrace();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -196,9 +195,9 @@ public class ControllerServer {
 			System.out.println("Finita lettura update.");
 			
 			game.resetCardEffectUsed();
-			s.broadcastObj(game); //ERRORE DI BROADCAST
+			s.broadcastObj(game); //ERRORE DI BROADCAST //risolto
 			System.out.println("Inviato status di gioco dopo lettura update.");
-			Thread.sleep(500); //chiunque abbia ideato java è la prova fatta persona della malvagità umana
+			Thread.sleep(500); //erano le 2 di mattina mentre scrivevo questo metodo, per 4 volte ho cercato "what's a thread"
 			if (game.removePlayer()) {
 				s.setIdPlayerToMinus1(game.getTurn());
 				players.remove(playerPlaying);
@@ -211,7 +210,7 @@ public class ControllerServer {
 				game.resetCardEffectUsed();
 				game.nextTurn();
 				System.out.println(game.getTurn());
-				s.broadcastObj(game); //il gioco viene updatato dal singolo //commento al commento: l'ho scritto in preda a delirio alle 3 di mattina e si vede
+				s.broadcastObj(game);
 			}
 			
 			done = false;
@@ -273,7 +272,7 @@ public class ControllerServer {
 	
 	
 	public void removePlayer(Player player) {
-		if (game != null)game.forceRemovePlayer(game.getPlayers().indexOf(player));
+		if (game != null) game.forceRemovePlayer(players.indexOf(player));
 	}
 	
 	class Server implements Runnable {
@@ -302,7 +301,7 @@ public class ControllerServer {
 		public void run() {
 			try {
 				serverSocket = new ServerSocket(SERVER_PORT);
-				pool = Executors.newCachedThreadPool(); //Solo perché pochi dati, si potrebbe ottimizzare
+				pool = Executors.newCachedThreadPool(); 
 				System.out.println("Accettando client...");
 				while (connections.size() < 4) {
 					Socket client = serverSocket.accept();
@@ -376,8 +375,8 @@ public class ControllerServer {
 					connections.remove(this); //viene rimosso connectionhandler
 					try {
 						broadcastObj(player.getName() + " si è disconnesso."); //viene comunicato uscita del client
-						players.remove(player);
 						removePlayer(player); //TODO: aggiornare status di gioco (rimuovere tutte le proprietà del giocatore)
+						players.remove(player);
 						shutdown();
 					} catch (IOException e1) {
 						e1.printStackTrace();
