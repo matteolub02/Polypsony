@@ -220,15 +220,18 @@ public class ControllerServer {
 			System.out.println("Finita lettura update.");
 			
 			game.resetCardEffectUsed();
-			s.broadcastObj(game); //ERRORE DI BROADCAST //risolto
+			s.broadcastObj(game); 
 			System.out.println("Inviato status di gioco dopo lettura update.");
-			Thread.sleep(500); //erano le 2 di mattina mentre scrivevo questo metodo, per 4 volte ho cercato "what's a thread"
-			if (game.removePlayer()) {
+			Thread.sleep(500); 
+			if (game.removePlayer()) { //rimosso dal gioco se true
 				s.setIdPlayerToMinus1(game.getTurn());
 				players.remove(playerPlaying);
 				s.broadcastObj(SERVER + playerPlaying.getName() + " non ha più soldi, viene rimosso dal gioco.");
 				game.resetCardEffectUsed();
-				s.broadcastObj(game);
+				if (game.getTurn() == game.getPlayers().size()) {
+					game.nextTurn(); //se viene rimosso ultimo giocatore (4, quindi 3), necessario il ciclo
+				}
+				s.broadcastObj(game); 
 			}
 			else {
 				s.broadcastObj(SERVER + playerPlaying.getName() +  " finisce il turno. Inizia il prossimo.");
