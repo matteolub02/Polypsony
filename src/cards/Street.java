@@ -9,10 +9,10 @@ public class Street extends Card{
 	
 	public Street(int pos, String color, String name, int cost, int rent, int house) {
 		super(name, pos, Card.STREET);
-		this.color = color; 
-		this.cost = cost;
-		this.rent = rent;
-		this.house = house;
+		this.color = color; //color of the street (useful for making possessions in Game)
+		this.cost = cost; //cost of the street
+		this.rent = rent; //first rent
+		this.house = house; //cost of one single house
 	}
 	
 	@Override

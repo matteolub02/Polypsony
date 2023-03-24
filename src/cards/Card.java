@@ -2,6 +2,14 @@ package cards;
 
 import java.io.Serializable;
 
+/**
+ * @author 736418
+ * @summary The first Card class, it has 3 vars:
+ * - NAME
+ * - POS
+ * - TYPE (integer, it indicates the type of the card)
+ *
+ */
 public class Card implements Serializable{
 	
 	private static final long serialVersionUID = 1L;

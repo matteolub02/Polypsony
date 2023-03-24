@@ -2,6 +2,10 @@ package game;
 
 import java.io.Serializable;
 
+/**
+ * @author 736418
+ * @summary This is the Player class, it represents the single player.
+ */
 public class Player implements Serializable{
 	
 

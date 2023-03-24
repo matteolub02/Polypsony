@@ -6,6 +6,11 @@ import javax.swing.border.EmptyBorder;
 import java.awt.BorderLayout;
 import javax.swing.JTextArea;
 
+/*
+ * @author 736418
+ * @summary it shows game's stats.
+ */
+
 public class Stats extends JFrame {
 
 	private static final long serialVersionUID = 1L;

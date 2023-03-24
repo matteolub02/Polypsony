@@ -8,6 +8,11 @@ import java.util.Random;
 import javax.xml.stream.XMLStreamException;
 import cards.*;
 
+/**
+ * @author 736418
+ * @summary This is the whole game system, this class has everything that is needed for making a Monopoly match.
+ *
+ */
 public class Game implements Serializable {
 	
 	
@@ -25,6 +30,11 @@ public class Game implements Serializable {
 	private int dicesValue = 0;
 	private boolean isCardEffectUsed;
 	
+	
+	/*
+	 * The next 3 methods are used for checking if the cardEffect was used or not. 
+	 * It helps the controller to check if he can tell the view that a player has to make a choice or not.
+	 */
 	public boolean didCardEffect() {
 		return isCardEffectUsed;
 	}

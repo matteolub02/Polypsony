@@ -10,6 +10,8 @@ import javax.xml.stream.XMLStreamReader;
 
 public class InitializeCards {
 	
+	
+	//This reads the XML file, to get all the data that is needed for the initializazion of the cards.
 	public static HashMap<Integer, Card> initialize () throws XMLStreamException {
 		HashMap<Integer, Card> cards = new HashMap<>(); //
 		XMLStreamReader xmlr = xmlrCreator ("src/cards/Cards.xml");
