@@ -22,8 +22,8 @@ public class ControllerPlayer {
 	private Client c = null;
 	private GameWindow g;
 	private Game game;
-	private int id = -1;
 	private Stats stats;
+	private Boolean isMyTurn = false;
 	
 	public ControllerPlayer (String name, String ip) {
 		player = new Player(name);
@@ -64,7 +64,7 @@ public class ControllerPlayer {
 	//check if it can show buttons
 	public void checkIsMyTurn() {
 		
-		if (game.getTurn() == id && game.didCardEffect()) {
+		if (isMyTurn && game.didCardEffect()) { //TODO check
 			System.out.println("è il mio turno!");
 			Card actualCard = game.getCards().get(game.getPlayerPlayingPos());
 			boolean one = false, two = false, three = false, four = false;
@@ -280,8 +280,8 @@ public class ControllerPlayer {
 						checkIsMyTurn();
 						stats.changeTextArea(getStatsText());
 						break;
-					case "Integer":
-						id = (Integer)o; 
+					case "Boolean":
+						isMyTurn = (Boolean)o; 
 						break;
 					}
 				}

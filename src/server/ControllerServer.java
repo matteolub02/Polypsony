@@ -6,6 +6,7 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -83,6 +84,7 @@ public class ControllerServer {
 	public void startGame() throws IOException, XMLStreamException, InterruptedException {
 		s.broadcastObj(SERVER + "Inizia il gioco!");
 		game = new Game(players);
+		s.setPlayerClients(players);
 		s.broadcastObj(game);
 		if (!game.isGameEnded()) {
 		do {
@@ -92,6 +94,7 @@ public class ControllerServer {
 			 */
 			
 			Player playerPlaying = game.getPlayerPlaying(); //player inizia a giocare
+			s.setTurnForClientPlaying(true, playerPlaying); //invia al client il boolean che indica è il tuo turno
 			
 			Thread.sleep(2000);
 			if (!game.checkJailStatusPlayerPlaying()) {
@@ -205,8 +208,7 @@ public class ControllerServer {
 				else {
 					if (game.removePlayerFromJailNotForFree()) {
 						System.out.println("Giocatore perde mentre in galera.");
-						s.setIdPlayerToMinus1(game.getTurn());
-						players.remove(playerPlaying);
+						players.remove(playerPlaying); //perché viene rimosso?
 						
 						s.broadcastObj(SERVER + playerPlaying.getName() + " non ha abbastanza soldi per uscire di galera. Rimosso dal gioco."); 
 					}
@@ -224,7 +226,6 @@ public class ControllerServer {
 			System.out.println("Inviato status di gioco dopo lettura update.");
 			Thread.sleep(500); 
 			if (game.removePlayer()) { //rimosso dal gioco se true
-				s.setIdPlayerToMinus1(game.getTurn());
 				players.remove(playerPlaying);
 				s.broadcastObj(SERVER + playerPlaying.getName() + " non ha più soldi, viene rimosso dal gioco.");
 				game.resetCardEffectUsed();
@@ -236,11 +237,11 @@ public class ControllerServer {
 			else {
 				s.broadcastObj(SERVER + playerPlaying.getName() +  " finisce il turno. Inizia il prossimo.");
 				game.resetCardEffectUsed();
-				game.nextTurn();
+				game.nextTurn(); //tutto nella norma
 				System.out.println(game.getTurn());
 				s.broadcastObj(game);
 			}
-			
+			s.setTurnForClientPlaying(false, playerPlaying); //invia al client boolean che indica turno finito
 			done = false;
 		} while (!game.isGameEnded());
 		}
@@ -302,40 +303,27 @@ public class ControllerServer {
 		private ServerSocket serverSocket;
 		private ArrayList<ConnectionHandler> connections;
 		private ExecutorService pool;
+		private HashMap<Player, ConnectionHandler> playerClients;
 		
+	
 		public Server () {
 			connections = new ArrayList<>();
+			playerClients = new HashMap<>();
 		}
 		
-		/*
-		 * The client has an important value which is ID, this value is important because everytime a players needs to make a choice
-		 * the client checks for the equivalence between ID and game.getTurn().
-		 * If a Player loses, then he has to leave the match, if we don't set this value to -1, the game will let him play for another player.
-		 * TODO: check if it changes other players ID
-		 */
-		public void setIdPlayerToMinus1(int player) {
-			ConnectionHandler ch =  connections.get(player);
-			Integer value = -1;
-			try {
-				ch.outData.writeObject(value);
-				ch.outData.flush();
-				ch.outData.reset();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			
-			//CHANGES ID OF i-CLIENTS WITH ID > PLAYER TO i - 1
-			for (int i = player + 1; i < connections.size(); i++) {
-				ConnectionHandler ch2 = connections.get(i);
-				try {
-					ch2.outData.writeObject(i - 1);
-					ch.outData.flush();
-					ch.outData.reset();
-				}
-				catch (IOException e) {
-					e.printStackTrace();
+		//setta player per client
+		public void setPlayerClients(ArrayList<Player> players) {
+			for (Player p : players) {
+				for (ConnectionHandler c : connections) {
+					if (c.getPlayer().equals(p)) {
+						playerClients.put(p,c);
+					}
 				}
 			}
+		}
+		
+		public void setTurnForClientPlaying (Boolean isMyTurn, Player p) throws IOException {
+			playerClients.get(p).sendObj(isMyTurn);
 		}
 
 		@Override
@@ -380,6 +368,10 @@ public class ControllerServer {
 			private ObjectInputStream inData;
 			private Player player;
 			
+			public Player getPlayer() {
+				return player;
+			}
+
 			public ConnectionHandler (Socket s) {
 				clientSocket = s;
 			}
@@ -401,8 +393,6 @@ public class ControllerServer {
 							player = (Player)o;
 							players.add(player);
 							broadcastObj(player.getName() + " si è connesso.");
-							Integer id = players.size() - 1;
-							outData.writeObject(id);
 							break;
 						case "Update": //update di gioco dal client, inviato solo dopo richiesta!
 							handleUpdate((Update)o); 
@@ -417,6 +407,7 @@ public class ControllerServer {
 					try {
 						broadcastObj(player.getName() + " si è disconnesso."); //viene comunicato uscita del client
 						removePlayer(player); //TODO: aggiornare status di gioco (rimuovere tutte le proprietà del giocatore)
+						playerClients.remove(player);
 						players.remove(player);
 						shutdown();
 					} catch (IOException e1) {

@@ -14,7 +14,7 @@ import view.HostOrConnectWindow;
 /**
  *	Avvia il programma
  */
-public class Main {
+public class StartUp {
 	
 	public static void main (String args[]) {
 		
