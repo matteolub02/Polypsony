@@ -92,7 +92,7 @@ public class ControllerPlayer {
 	public String getStatsText() {
 		String s = new String("Stats:\n");
 		if (game != null) for (Player p : game.getPlayers()) {
-			s += (p.getName() + ": Saving: " + p.getSavings() + "M" 
+			s += (p.getName() + ": Soldi: " + p.getSavings() + "M" 
 					+ "\tCase costruite: " + p.getBuildedHouses() + "\tPos: " + game.getPlayerPos().get(p)
 					+ "\nPass Jail: " + p.getGetOutOfJailFreeNumber() + "\n");
 		}
